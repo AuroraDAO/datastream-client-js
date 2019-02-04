@@ -1,0 +1,20 @@
+{
+  "name": "@auroradao/datastream-client",
+  "version": "1.1.0-alpha.0",
+  "description": "Easily connect with the IDEX Datastream API",
+  "main": "lib/index.js",
+  "repository": "git@github.com:AuroraDAO/datastream-client.git",
+  "author": "Braden R. Napier, Juraj Husar",
+  "license": "MIT",
+  "scripts": {
+    "try": "ts-node ./quick-try",
+    "try:watch": "ts-node-dev --respawn ./quick-try"
+  },
+  "dependencies": {
+    "@auroradao/datastream-connection": "^1.1.0-alpha.0",
+    "@auroradao/datastream-types": "^1.1.0-alpha.0",
+    "shortid": "^2.2.14",
+    "task-handler": "^2.8.1"
+  },
+  "gitHead": "8b4e841c882a851459b342c871840733f2145563"
+}
