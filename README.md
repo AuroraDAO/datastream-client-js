@@ -28,8 +28,8 @@ On Node we need to provide a `WebSocket` "connector" that we wish to use. A conn
 
 We currently maintain two packages:
 
-- [`@auroradao/datastream-connector-ws`](./packages/datastream.connector/ws) using the [`ws`](https://github.com/websockets/ws) package
-- [`@auroradao/datastream-connector-uws`](./packages/datastream.connector/uws) using an implementation of the [`uws`](https://github.com/uNetworking/uWebSockets) binding for Node.
+- [`@auroradao/datastream-connector-ws`](./packages/datastream-connector-ws) using the [`ws`](https://github.com/websockets/ws) package
+- [`@auroradao/datastream-connector-uws`](./packages/datastream-connector-uws) using an implementation of the [`uws`](https://github.com/uNetworking/uWebSockets) binding for Node.
 
 ```bash
 yarn add @auroradao/datastream-client
