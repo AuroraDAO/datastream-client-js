@@ -1,0 +1,13 @@
+{
+  "name": "@auroradao/datastream-connection",
+  "version": "1.1.0-alpha.0",
+  "description": "Internal package called by @auroradao/datastream-client which maintains the provided connector.",
+  "main": "lib/index.js",
+  "author": "Braden R. Napier",
+  "license": "MIT",
+  "dependencies": {
+    "@auroradao/datastream-types": "^1.1.0-alpha.0",
+    "task-handler": "^2.8.1"
+  },
+  "gitHead": "8b4e841c882a851459b342c871840733f2145563"
+}

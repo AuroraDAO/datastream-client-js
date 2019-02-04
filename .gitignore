@@ -1,0 +1,17 @@
+
+dist/
+# \.junk/
+private/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+yarn-error.log
+
+lib/
+flow-typed/
+tags
+node_modules/
+*.swp
+.DS_Store
+lerna-debug.log

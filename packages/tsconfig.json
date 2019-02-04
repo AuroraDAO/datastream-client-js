@@ -1,0 +1,17 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "datastream-client"
+    },
+    {
+      "path": "datastream-connector-ws"
+    },
+    {
+      "path": "datastream-errors"
+    },
+    {
+      "path": "datastream-types"
+    }
+  ]
+}

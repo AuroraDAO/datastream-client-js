@@ -1,0 +1,7 @@
+{
+  "prettier.tslintIntegration": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  }
+}
