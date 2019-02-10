@@ -29,21 +29,6 @@ createDatastreamClient(
     onMessage(message) {
       console.log('Message Received: ', message);
     },
-    onEvent(event) {
-      console.log('Event: ', event);
-    },
-    onError(error) {
-      console.log('Error: ', error);
-    },
-    onWillReconnect(after) {
-      console.log('Will Reconnect after: ', after);
-    },
-    onReconnect() {
-      console.log('Reconnecting Now!');
-    },
-    onDisconnect(code, reason) {
-      console.log('Disconnected! ', code, reason);
-    },
   }
 );
 

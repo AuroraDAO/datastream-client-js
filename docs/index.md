@@ -6,7 +6,7 @@ The IDEX Datastream API is a realtime API using WebSockets to deliver realtime i
 
 - **Current Version:** 1.0.0
 - **Allowed Versions:** `~1.0`
-- **Endpoint:** wss://wss.idex.market
+- **Endpoint:** wss://datastream.idex.market
 
 # Format Reference
 
@@ -179,7 +179,6 @@ Events are sent when one of your subscribed topics receives a message. These hav
 
 </p>
 </details><br />
-
 
 ## Protocol Events & Errors
 
