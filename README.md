@@ -48,10 +48,15 @@ const client = createDatastreamClient(
   },
   {
     onConnect() {
-      client.subscribe('accounts', '0x..', [
+      client.subscribe('account', '0x..', [
         'account_withdrawal_dispatched',
         'account_withdrawal_complete',
       ]);
+      client.subscribe(
+        'markets',
+        ['ETH_AURA', 'ETH_IDXM'],
+        ['market_orders', 'market_cancels', 'market_trades']
+      );
     },
     onEvent(message) {
       switch (message.event) {
