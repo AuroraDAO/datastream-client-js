@@ -60,13 +60,14 @@ const client = createDatastreamClient(
     },
     onEvent(message) {
       switch (message.event) {
-        case 'account_withdrawal_dispatched': {
-          // handle
-          break;
+        case 'market_trades':
+        case 'market_cancels':
+        case 'market_orders': {
+          return handleMarketEvent(message);
         }
+        case 'account_withdrawal_dispatched':
         case 'account_withdrawal_complete': {
-          // handle
-          break;
+          return handleAccountEvent(message);
         }
       }
     },
