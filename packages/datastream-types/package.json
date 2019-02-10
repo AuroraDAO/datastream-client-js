@@ -1,6 +1,6 @@
 {
   "name": "@auroradao/datastream-types",
-  "version": "1.1.0-alpha.0",
+  "version": "1.1.0",
   "description": "Typedefs for the @auroradao/datastream-client",
   "main": "lib/index.js",
   "author": "Braden R. Napier",

@@ -1,12 +1,12 @@
 {
   "name": "@auroradao/datastream-connector-web",
-  "version": "1.1.0-alpha.0",
+  "version": "1.1.0",
   "description": "Connector to use the ws package with the @auroradao/datastream-client",
   "main": "lib/index.js",
   "author": "Braden R. Napier",
   "license": "MIT",
   "dependencies": {
-    "@auroradao/datastream-types": "^1.1.0-alpha.0"
+    "@auroradao/datastream-types": "^1.1.0"
   },
   "gitHead": "8b4e841c882a851459b342c871840733f2145563"
 }
