@@ -193,6 +193,8 @@ interface InitialConfiguration {
 
 ### Subscriptions
 
+---
+
 #### Account Events
 
 ##### account_transaction_graph
@@ -231,6 +233,8 @@ interface InitialConfiguration {
 
 ##### account_idxm_balance
 
+---
+
 #### Market Events
 
 ##### market_orders
@@ -238,6 +242,8 @@ interface InitialConfiguration {
 ##### market_cancels
 
 ##### market_trades
+
+---
 
 #### Chain Events
 
