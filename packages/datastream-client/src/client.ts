@@ -19,10 +19,6 @@ type PartialCallbacks = Partial<$Datastream.Callbacks>;
 
 type Any$Ref = Task$Ref<any, any, any, any>;
 
-// type EventCallbackMap<T extends $Datastream.Connection$Events> = {
-//   [K in keyof T]: (callbacks: $Datastream.Callbacks) => $Datastream.Callbacks[K]
-// };
-
 function assertNever(event: never): never {
   console.error(
     `[ERROR] | DatastreamClient | Unhandled connection event "${event}"`
@@ -333,7 +329,7 @@ export class DatastreamClient implements $Datastream.Client {
         );
       }
     }
-    // TODO: better way to handle dynamic args like this?
+    // TODO: better way to handle dynamic args like this in TypeScript?
     if (this.callbacks) {
       switch (event) {
         case 'handshake': {

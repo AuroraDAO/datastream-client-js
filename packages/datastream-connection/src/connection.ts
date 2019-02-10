@@ -440,12 +440,15 @@ export default function createConnection(
     get sid() {
       return sid;
     },
+
     get connected() {
       return state === STATE.HANDSHAKED;
     },
+
     get state() {
       return state;
     },
+
     connect(clearBufferIfNeeded?: boolean) {
       switch (state) {
         case STATE.FATAL:
@@ -477,6 +480,7 @@ export default function createConnection(
         reconnect();
       }
     },
+
     /**
      * Disconnects the socket and will not attempt to reconnect.  When
      * this is called, the only time the socket will reconnect is if
@@ -492,6 +496,16 @@ export default function createConnection(
       clearAllConnectionTasks(task, buffer);
       closeSocketIfNeeded(CLOSE_CODES.LEAVING, 'ConnectionDisconnect');
     },
+
+    /**
+     *
+     *
+     * @template RID
+     * @template REQ
+     * @param {$Datastream.Request$Valid<RID, REQ>} message
+     * @param {boolean} shouldBufferRequest
+     * @returns
+     */
     send<RID extends string, REQ extends string>(
       message: $Datastream.Request$Valid<RID, REQ>,
       shouldBufferRequest: boolean
@@ -540,6 +554,13 @@ export default function createConnection(
 
       return true;
     },
+
+    /**
+     *
+     *
+     * @param {$Datastream.Request$Valid<string, string>} message
+     * @returns {boolean}
+     */
     removeFromBuffer(message: $Datastream.Request$Valid<string, string>) {
       return buffer ? buffer.remove(message) : false;
     },
