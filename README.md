@@ -52,11 +52,26 @@ const client = createDatastreamClient(
         'account_withdrawal_dispatched',
         'account_withdrawal_complete',
       ]);
-      client.subscribe(
-        'markets',
-        ['ETH_AURA', 'ETH_IDXM'],
-        ['market_orders', 'market_cancels', 'market_trades']
-      );
+      // any request may also be used as a promise
+      // with a timeout if we need to wait for
+      // the result
+      client
+        .subscribe(
+          'markets',
+          ['ETH_AURA', 'ETH_IDXM'],
+          ['market_orders', 'market_cancels', 'market_trades']
+        )
+        .promise({ timeout: 10000 })
+        .then(result => {
+          // subscription successful!
+        })
+        .catch(err => {
+          if (err.message === 'TIMEOUT') {
+            // subscription timed out!
+          } else {
+            // subscription failed!
+          }
+        });
     },
     onEvent(message) {
       switch (message.event) {
