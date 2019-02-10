@@ -111,6 +111,8 @@ export interface Callbacks {
       | Message$Result$Error<string, string>
       | Message$Event
   ): any;
+
+  onSuccess(this: Client, data: Message$Result$Success<string, string>): any;
   onEvent(this: Client, data: Message$Event): any;
   onError(this: Client, error: Message$Result$Error<string, string>): any;
   /**

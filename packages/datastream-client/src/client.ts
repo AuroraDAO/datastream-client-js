@@ -381,7 +381,7 @@ export class DatastreamClient implements $Datastream.Client {
           break;
         }
         case 'message': {
-          const callback = this.callbacks.onMessage;
+          const callback = this.callbacks.onSuccess || this.callbacks.onMessage;
           if (callback) {
             callback.apply(this, args as $Datastream.Client$EventArgs<
               'message'
