@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "@auroradao/datastream-types": "^1.1.0-alpha.0",
-    "task-handler": "^2.8.1"
+    "task-handler": "^2.9.2"
   },
   "gitHead": "8b4e841c882a851459b342c871840733f2145563"
 }

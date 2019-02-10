@@ -1,3 +1,4 @@
+import WebConnector from '@auroradao/datastream-connector-web';
 import * as $Datastream from '@auroradao/datastream-types';
 
 /**
@@ -17,6 +18,7 @@ export const DEFAULT_CONFIG_CLIENT: $Datastream.DefaultConfiguration = Object.fr
     log: false,
     stateful: false,
     url: 'wss://datastream.idex.market',
+    connector: WebConnector,
   }
 );
 

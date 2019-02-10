@@ -1,3 +1,11 @@
+import * as $Datastream from '@auroradao/datastream-types';
+
+interface ClosureHandlers {
+  [code: number]: (reason: string, config: $Datastream.Configuration) => void;
+  1012(reason: string, config: $Datastream.Configuration): void;
+  1002(reason: string, config: $Datastream.Configuration): void;
+}
+
 /**
  * Handlers for RFC 6455's Status Codes
  *
@@ -12,7 +20,7 @@
  *
  * @see https://tools.ietf.org/html/rfc6455#section-7.4.1
  */
-export default {
+const handlers: ClosureHandlers = {
   /**
    * @ref RFC6455 Closure Code 1002 (Protocol Error)
    *
@@ -33,22 +41,48 @@ export default {
    *   request did not match the expected value.  The
    *   server is requesting a resync by disconnecting
    *   the client.
+   *
+   * @note
+   *  When a`FATAL` value is encountered, no further connections will be allowed
+   *  until the issue has been resolved (likely requiring a completely restart of
+   *  the program after resolving any programming errors or issues).
    */
-  1002(reason: string) {
+  1002(reason: string, config: $Datastream.Configuration) {
     switch (reason) {
-      case 'ProtocolNegotiationFailure': {
-        break;
-      }
       case 'AuthenticationFailure': {
-        break;
+        console.error(
+          '[FATAL] | DatastreamConnection | The authentication information you have provided is invalid.  No further connection attempts will be made.  Please check the authentication information provided and resolve before trying again.'
+        );
+        throw new Error('FATAL');
       }
       case 'InvalidVersion': {
+        console.error(
+          '[FATAL] | DatastreamConnection | This client version has been deprecated and must be upgraded to the newest version before it may interact with the Datastream API.  No further connection attempts will be made.'
+        );
+        throw new Error('FATAL');
+      }
+      case 'ProtocolNegotiationFailure': {
+        if (config.log) {
+          console.warn(
+            '[WARN] | DatastreamConnection | A protocol negotation failure occurred.  This may be due to the server receiving higher traffic than usual and should be resolved shortly.  A reconnection attempt will be schedule shortly.'
+          );
+        }
         break;
       }
       case 'SessionIDMismatch': {
+        if (config.log) {
+          console.warn(
+            '[WARN] | DatastreamConnection | A Session ID mismatch has been detected.  This means that the server and client have gotten out of sync.  A reconnect will be scheduled immediately to re-sync with the Datastream.'
+          );
+        }
         break;
       }
       default: {
+        if (config.log) {
+          console.warn(
+            `[WARN] | DatastreamConnection | An unhandled protocol error has occurred "${reason}", a reconnect will be scheduled.`
+          );
+        }
         break;
       }
     }
@@ -74,3 +108,5 @@ export default {
     }
   },
 };
+
+export default handlers;

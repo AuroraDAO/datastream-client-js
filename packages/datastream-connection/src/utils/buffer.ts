@@ -1,5 +1,6 @@
 /* @flow */
 import * as $Datastream from '@auroradao/datastream-types';
+import requests from '../requests';
 
 export function createBuffer(config: $Datastream.BufferConfiguration) {
   let queue: string[] = [];
@@ -8,7 +9,7 @@ export function createBuffer(config: $Datastream.BufferConfiguration) {
     get length() {
       return queue.length;
     },
-    add(request: $Datastream.Request<any, any>) {
+    add(request: $Datastream.Request<any>) {
       const str = JSON.stringify(request);
       if (queue.includes(str)) {
         return false;
@@ -19,7 +20,7 @@ export function createBuffer(config: $Datastream.BufferConfiguration) {
       queue.push(str);
       return true;
     },
-    remove(request: $Datastream.Request<any, any>) {
+    remove(request: $Datastream.Request<any>) {
       if (queue.length === 0) {
         return false;
       }
@@ -31,20 +32,13 @@ export function createBuffer(config: $Datastream.BufferConfiguration) {
     clear() {
       queue = [];
     },
-    flush(): void | { request: 'bulk'; payload: string } {
+    flush(): void | $Datastream.Request<'bulk'> {
       if (!queue.length) {
         return;
       }
       const prevQueue = queue.slice();
       queue = [];
-      return prevQueue.length > 0
-        ? {
-            request: 'bulk',
-            payload: JSON.stringify({
-              requests: prevQueue,
-            }),
-          }
-        : undefined;
+      return prevQueue.length > 0 ? requests.bulk(prevQueue) : undefined;
     },
   };
 }

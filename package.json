@@ -9,11 +9,14 @@
     "packages/*"
   ],
   "scripts": {
-    "lerna:hoist": "lerna link convert",
-    "lerna:bootstrap": "lerna bootstrap",
-    "build:all": "tsc -b packages/datastream-client packages/datastream-types packages/datastream-errors packages/datastream-connector-ws",
+    "build:all": "tsc -b packages/datastream-types packages/datastream-client packages/datastream-connection packages/datastream-connector-ws packages/datastream-connector-uws packages/datastream-connector-web",
     "clean": "rimraf packages/**/lib",
-    "release": "cross-env HUSKY_BYPASS=true lerna publish"
+    "lerna:bootstrap": "lerna bootstrap",
+    "lerna:hoist": "lerna link convert",
+    "lerna:publish": "cross-env HUSKY_BYPASS=true lerna publish",
+    "release": "npm-run-all clean build:all lerna:publish",
+    "test:quick": "npm-run-all build:all test:quick:run",
+    "test:quick:run": "ts-node-dev --respawn tests/quick.ts"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.0",
@@ -30,7 +33,7 @@
     "ts-node": "^8.0.2",
     "ts-node-dev": "^1.0.0-pre.32",
     "tslint": "^5.12.1",
-    "tslint-config-prettier": "^1.17.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.1",
     "typescript-tslint-plugin": "^0.3.1"
   },

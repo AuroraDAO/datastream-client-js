@@ -3,6 +3,8 @@
   "rules": {
     "object-literal-sort-keys": false,
     "interface-name": false,
-    "no-console": false
+    "no-console": false,
+    "no-internal-module": true,
+    "promise-function-async": true
   }
 }

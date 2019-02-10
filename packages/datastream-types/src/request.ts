@@ -1,20 +1,32 @@
 import { Task$Ref, TASK_CANCELLED } from 'task-handler';
 
+import { PromiseConfig } from './config';
 import { DatastreamServerError } from './errors';
 
-export interface Request<RID extends string, REQ extends string> {
-  readonly rid: RID;
+export interface Request<REQ extends string> {
   readonly request: REQ;
   readonly payload: string;
   _context?: object;
 }
 
+/**
+ * Valid requests include rid, request, payload, and possibly _context
+ */
+export type Request$Valid<RID extends string, REQ extends string> = Request<
+  REQ
+> & {
+  readonly rid: RID;
+};
+
+/**
+ * Complete request include the `sid` which is added by the `connection`
+ */
 export type Request$Complete<
   RID extends string,
   REQ extends string,
   SID extends string
-> = Request<RID, REQ> & {
-  readonly sid: SID;
+> = Request$Valid<RID, REQ> & {
+  sid: SID;
 };
 
 export type Subscribe$Requests =
@@ -37,6 +49,7 @@ export interface Message$Event {
   readonly eid: string;
   readonly event: Message$Event$Types;
   readonly payload: Record<string, any>;
+  readonly seq: number;
 }
 
 export interface Message$Result$Success<
@@ -56,9 +69,22 @@ export interface Message$Result$Error<RID extends string, REQ extends string> {
   readonly sid: string;
   readonly request: REQ;
   readonly payload: {
-    readonly message: string;
+    message: string;
   };
 }
+
+export type Message$Result$Socket<RID extends string, REQ extends string> =
+  | Message$Result$Success<RID, REQ>
+  | Message$Result$Error<RID, REQ>
+  | Message$Event;
+
+/**
+ * Promises will have error thrown / rejected so error is
+ * not included
+ */
+export type Message$PromiseResult<RID extends string, REQ extends string> =
+  | Message$Result$Success<RID, REQ>
+  | typeof TASK_CANCELLED;
 
 export type Message$Result<RID extends string, REQ extends string> =
   | Message$Result$Success<RID, REQ>
@@ -68,6 +94,14 @@ export type Message$Result<RID extends string, REQ extends string> =
 export type Request$Job$Ref<RID extends string, REQ extends string> = Task$Ref<
   'job',
   RID,
-  Message$Result<RID, REQ>,
+  Message$PromiseResult<RID, REQ>,
   any
 >;
+
+export interface Client$SendResponse<RID extends string, REQ extends string> {
+  rid: RID;
+  request: REQ;
+  promise(
+    promiseConfig?: PromiseConfig
+  ): Promise<Message$Result$Success<RID, REQ>>;
+}

@@ -1,6 +1,10 @@
 {
   "prettier.tslintIntegration": true,
   "typescript.implementationsCodeLens.enabled": true,
+  "typescript.reportStyleChecksAsWarnings": false,
+  "tslint.alwaysShowRuleFailuresAsWarnings": false,
+  "typescript.validate.enable": true,
+  "javascript.validate.enable": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.tslint": true
   }

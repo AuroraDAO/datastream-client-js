@@ -3,54 +3,120 @@ import * as $Datastream from '@auroradao/datastream-types';
 
 import createTaskHandler, { Task$Ref, TASK_CANCELLED } from 'task-handler';
 
+import { modifyRunningConfig } from './config';
 import { DEFAULT_CONFIG_PROMISE, TO_REQUEST } from './constants';
 
 import {
   DatastreamCancellationError,
+  DatastreamServerError,
   DatastreamTimeoutError,
   ValidationError,
 } from './errors';
 
 import { createRequestID } from './utils';
 
+type PartialCallbacks = Partial<$Datastream.Callbacks>;
+
 type Any$Ref = Task$Ref<any, any, any, any>;
 
-interface IClientState {
-  connected: boolean;
+// type EventCallbackMap<T extends $Datastream.Connection$Events> = {
+//   [K in keyof T]: (callbacks: $Datastream.Callbacks) => $Datastream.Callbacks[K]
+// };
+
+function assertNever(event: never): never {
+  console.error(
+    `[ERROR] | DatastreamClient | Unhandled connection event "${event}"`
+  );
+  return event;
 }
 
 /**
  * The core class providing the public interface methods to the user.  Maintains the top-level
  * client state and request handling.
  */
-export class DatastreamClient {
-  public state: IClientState = {
-    connected: false,
-  };
-
+export class DatastreamClient implements $Datastream.Client {
   private queue: Map<string, Any$Ref> = new Map();
+
   private task = createTaskHandler();
+
   private connection = createConnection(
     this.task,
     this.config,
-    this.handleEvent
+    this.handleEvent.bind(this)
   );
 
   constructor(
-    public readonly config: $Datastream.Configuration,
-    private readonly callbacks?: $Datastream.Callbacks
+    private readonly config: $Datastream.Configuration,
+    private readonly callbacks?: PartialCallbacks
   ) {
     if (this.config.auto) {
-      this.connection.connect();
+      this.task.defer('client:auto-connect', () => this.connection.connect());
     }
   }
 
-  public connect() {
-    this.connection.connect();
+  public get connected() {
+    return this.connection.connected;
   }
 
+  public get log() {
+    return this.config.log;
+  }
+
+  /**
+   * Set whether the client should log its internal
+   * actions to the console.
+   *
+   * @memberof DatastreamClient
+   */
+  public set log(to: boolean) {
+    if (typeof to !== 'boolean') {
+      throw new TypeError(
+        '[ERROR] | DatastreamClient | client.logging must be a boolean value.'
+      );
+    }
+    modifyRunningConfig(this.config, {
+      log: to,
+    });
+  }
+
+  /**
+   * Get the current locale being used by the client.  Locale
+   * will determine how various error messages are returned
+   * when received from the server.
+   *
+   * @memberof DatastreamClient
+   */
+  public get locale() {
+    return this.config.locale || 'en';
+  }
+
+  /**
+   * Modify the locale used by the client.
+   *
+   * @memberof DatastreamClient
+   */
+  public set locale(to: string) {
+    modifyRunningConfig(this.config, {
+      locale: to,
+    });
+  }
+
+  /**
+   *
+   *
+   * @memberof DatastreamClient
+   */
+  public connect() {
+    return this.connection.connect();
+  }
+
+  /**
+   *
+   *
+   * @memberof DatastreamClient
+   */
   public disconnect() {
-    this.connection.disconnect();
+    return this.connection.disconnect();
   }
 
   /**
@@ -58,26 +124,41 @@ export class DatastreamClient {
    * should never need to be used as `subscribe`, `unsubscribe`, and `clear`
    * methods are all you should require.
    *
-   * @param {string} request - The request you wish to send.
+   * @template REQ
+   * @template RID
+   * @param {REQ} request
+   * @param {{ [key: string]: any }} [payload={}]
+   * @param {boolean} [buffer=Boolean(this.config.buffer)]
+   * @returns {$Datastream.Client$SendRequest}
+   * @memberof DatastreamClient
    */
-  public send<REQ extends string, RID extends string>(
+  public send<RID extends string, REQ extends string>(
     this: this,
     request: REQ,
-    payload: { [key: string]: any } = {},
-    buffer: boolean = Boolean(this.config.buffer),
-    context?: object
-  ) {
+    payload: Record<string | number, any> = {},
+    shouldBufferRequest: boolean = Boolean(this.config.buffer),
+    context?: Record<string | number, any>
+  ): $Datastream.Client$SendResponse<RID, REQ> {
     if (context && this.config.type !== 'proxy') {
-      throw new ValidationError('client.subscribe', '"context" is not allowed');
+      throw new ValidationError('client.send', '"context" is not allowed');
+    }
+    if (typeof payload !== 'object') {
+      throw new ValidationError(
+        'client.send',
+        '"payload" should be an object type'
+      );
     }
     const rid: RID = createRequestID();
     let ref: $Datastream.Request$Job$Ref<RID, REQ>;
-    const data: $Datastream.Request<RID, REQ> = {
+    const message: $Datastream.Request$Valid<RID, REQ> = {
       rid,
       request,
       payload: JSON.stringify(payload),
     };
-    const sent = this.connection.send(data, buffer, context);
+    if (context) {
+      message._context = context;
+    }
+    const sent = this.connection.send(message, shouldBufferRequest);
     return {
       rid,
       request,
@@ -88,17 +169,17 @@ export class DatastreamClient {
           ref = this.createPromisedRequest(
             rid,
             request,
-            data,
+            message,
             sent,
             promiseConfig
           );
         }
         try {
-          const { result } = await ref.promise;
+          const { result } = await ref.promise();
           if (result === TASK_CANCELLED) {
             throw new DatastreamCancellationError(rid, request);
           }
-          return result;
+          return result as $Datastream.Message$Result$Success<RID, REQ>;
         } catch (err) {
           delete err.taskRef;
           throw err;
@@ -107,16 +188,27 @@ export class DatastreamClient {
     };
   }
 
+  /**
+   * Allows subscribing to a given datastream topic with
+   * one or multiple events.
+   *
+   * @param {$Datastream.Subscribe$Categories} to
+   * @param {(string | string[])} rawTopics
+   * @param {(string | string[])} [rawEvents]
+   * @param {object} [context]
+   * @returns
+   * @memberof DatastreamClient
+   */
   public subscribe(
     to: $Datastream.Subscribe$Categories,
-    rawTopics: string | string[],
+    topics: string,
     rawEvents?: string | string[],
-    context?: object
-  ) {
-    if (!rawTopics) {
+    context?: Record<string | number, any>
+  ): $Datastream.Client$SendResponse<string, $Datastream.Subscribe$Requests> {
+    if (!topics) {
       throw new ValidationError(
         'client.subscribe',
-        '"topics" must be a string or array of strings defining the topics for-which you wish to subscribe.'
+        '"topics" must be a string defining the topic for-which you wish to subscribe.'
       );
     }
     const request = TO_REQUEST[to];
@@ -126,7 +218,7 @@ export class DatastreamClient {
         `"to" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${to}"`
       );
     }
-    const topics: string[] = Array.isArray(rawTopics) ? rawTopics : [rawTopics];
+
     const events: undefined | string[] = rawEvents
       ? Array.isArray(rawEvents)
         ? rawEvents
@@ -145,11 +237,20 @@ export class DatastreamClient {
     );
   }
 
+  /**
+   *
+   *
+   * @param {$Datastream.Subscribe$Categories} from
+   * @param {(string | string[])} [rawTopics]
+   * @param {object} [context]
+   * @returns {$Datastream.Client$SendRequest<string, $Datastream.Subscribe$Requests>}
+   * @memberof DatastreamClient
+   */
   public unsubscribe(
     from: $Datastream.Subscribe$Categories,
     rawTopics?: string | string[],
-    context?: object
-  ) {
+    context?: Record<string | number, any>
+  ): $Datastream.Client$SendResponse<string, $Datastream.Subscribe$Requests> {
     const request = TO_REQUEST[from];
     if (!request) {
       throw new ValidationError(
@@ -173,7 +274,18 @@ export class DatastreamClient {
     );
   }
 
-  public clear(from: $Datastream.Subscribe$Categories, context?: object) {
+  /**
+   * Clears all subscriptions for the given topic.
+   *
+   * @param {$Datastream.Subscribe$Categories} from
+   * @param {object} [context]
+   * @returns
+   * @memberof DatastreamClient
+   */
+  public clear(
+    from: $Datastream.Subscribe$Categories,
+    context?: Record<string | number, any>
+  ): $Datastream.Client$SendResponse<string, $Datastream.Subscribe$Requests> {
     const request = TO_REQUEST[from];
     if (!request) {
       throw new ValidationError(
@@ -189,14 +301,127 @@ export class DatastreamClient {
     );
   }
 
-  private handleEvent(event: $Datastream.Connection$Events) {
-    console.log(event, this.callbacks);
+  /**
+   * When an event is received by our `connection`, it will call this
+   * callback to allow the client to handle the event as-necessary.
+   *
+   * @private
+   * @param {$Datastream.Connection$Events} event
+   * @param {*} [data]
+   * @memberof DatastreamClient
+   */
+  private handleEvent(
+    event: $Datastream.Connection$Events,
+    ...args: $Datastream.Client$EventArgs<$Datastream.Connection$Events>
+  ) {
+    if (event === 'message' || event === 'error') {
+      const [data] = args as $Datastream.Client$EventArgs<'message' | 'error'>;
+      const ref = this.queue.get(data.rid);
+      if (ref) {
+        if (event === 'message') {
+          return ref.resolve(data as $Datastream.Message$Result$Success<
+            string,
+            string
+          >);
+        }
+        return ref.reject(
+          new DatastreamServerError(
+            data.rid,
+            data.request,
+            data.payload.message
+          )
+        );
+      }
+    }
+    // TODO: better way to handle dynamic args like this?
+    if (this.callbacks) {
+      switch (event) {
+        case 'handshake': {
+          const callback = this.callbacks.onConnect;
+          if (callback) {
+            callback.apply(this, args as $Datastream.Client$EventArgs<
+              'handshake'
+            >);
+          }
+          break;
+        }
+        case 'close': {
+          const callback = this.callbacks.onDisconnect;
+          if (callback) {
+            callback.apply(this, args as $Datastream.Client$EventArgs<'close'>);
+          }
+          break;
+        }
+        case 'will-reconnect': {
+          const callback = this.callbacks.onWillReconnect;
+          if (callback) {
+            callback.apply(this, args as $Datastream.Client$EventArgs<
+              'will-reconnect'
+            >);
+          }
+          break;
+        }
+        case 'reconnect': {
+          const callback = this.callbacks.onReconnect;
+          if (callback) {
+            callback.apply(this, args as $Datastream.Client$EventArgs<
+              'reconnect'
+            >);
+          }
+          break;
+        }
+        case 'event': {
+          const callback = this.callbacks.onEvent || this.callbacks.onMessage;
+          if (callback) {
+            callback.apply(this, args as $Datastream.Client$EventArgs<'event'>);
+          }
+          break;
+        }
+        case 'error': {
+          const callback = this.callbacks.onError || this.callbacks.onMessage;
+          if (callback) {
+            callback.apply(this, args as $Datastream.Client$EventArgs<'error'>);
+          }
+          break;
+        }
+        case 'message': {
+          const callback = this.callbacks.onMessage;
+          if (callback) {
+            callback.apply(this, args as $Datastream.Client$EventArgs<
+              'message'
+            >);
+          }
+          break;
+        }
+        default:
+          return assertNever(event);
+      }
+    }
   }
 
+  /**
+   * Used to generate a promise that resolves when the given
+   * request resolves.  Allows also setting a timeout that will
+   * instead reject the given timeout.
+   *
+   * When using a promised response, the users callback handlers
+   * will not be called unless a timeout occurred.
+   *
+   * @private
+   * @template RID
+   * @template REQ
+   * @param {RID} rid
+   * @param {REQ} request
+   * @param {$Datastream.Request<RID, REQ>} data
+   * @param {boolean} alreadySent
+   * @param {$Datastream.PromiseConfig} { timeout }
+   * @returns
+   * @memberof DatastreamClient
+   */
   private createPromisedRequest<RID extends string, REQ extends string>(
     rid: RID,
     request: REQ,
-    data: $Datastream.Request<RID, REQ>,
+    message: $Datastream.Request$Valid<RID, REQ>,
     alreadySent: boolean,
     { timeout }: $Datastream.PromiseConfig
   ) {
@@ -219,7 +444,7 @@ export class DatastreamClient {
             // it for now.
             const sent = alreadySent
               ? alreadySent
-              : !this.connection.removeFromBuffer(data);
+              : !this.connection.removeFromBuffer(message);
             return ref.reject(new DatastreamTimeoutError(rid, request, sent));
           }, timeout);
         }

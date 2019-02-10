@@ -11,7 +11,7 @@ export default function createDatastreamConnector(
     .on('open', () => callback('open'))
     .on('close', (code, reason) => callback('close', code, reason, true))
     .on('message', data => callback('message', data))
-    .on('pong', data => callback('pong', data))
+    .on('pong', data => callback('pong', data.toString()))
     .on('error', error => callback('error', error));
 
   return {
@@ -29,6 +29,7 @@ export default function createDatastreamConnector(
         cb(err);
       }
     },
+    ping: socket.ping,
     close: socket.close,
     terminate: socket.terminate,
   };

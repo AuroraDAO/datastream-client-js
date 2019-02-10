@@ -11,6 +11,9 @@
     },
     {
       "path": "../datastream-connection"
+    },
+    {
+      "path": "../datastream-connector-web"
     }
   ]
 }

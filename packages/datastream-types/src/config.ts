@@ -1,7 +1,22 @@
+import { Client } from './client';
 import { Connection$Connector } from './connection';
-
+import {
+  Message$Event,
+  Message$Result$Error,
+  Message$Result$Success,
+} from './request';
 export interface BufferConfiguration {
   readonly size: number;
+}
+
+/**
+ * Any values which are allowed to be changed are merged into a running
+ * configuration by accepting an "updater" object which is merged into
+ * a new running configuration.
+ */
+export interface ConfigurationUpdater {
+  locale?: string;
+  log?: boolean;
 }
 
 export interface InitialConfiguration {
@@ -12,7 +27,7 @@ export interface InitialConfiguration {
    * @required
    */
   readonly key: string;
-  readonly connector: Connection$Connector;
+  readonly connector?: Connection$Connector;
   /**
    * Should the client automatically maintain a persistent
    * connection to the server?
@@ -40,7 +55,7 @@ export interface InitialConfiguration {
    *
    * @defaultValue false
    */
-  log?: boolean;
+  readonly log?: boolean;
   /**
    * Optionally provide a WebSocket URL to use instead
    * of the default server.
@@ -68,7 +83,7 @@ export interface InitialConfiguration {
    *
    * @defaultValue "en"
    */
-  locale?: string;
+  readonly locale?: string;
   readonly buffer?: BufferConfiguration;
 }
 
@@ -82,15 +97,36 @@ export interface DefaultConfiguration {
   readonly log: boolean;
   readonly stateful: boolean;
   readonly url: string;
+  readonly connector: Connection$Connector;
 }
 
 export type Configuration = DefaultConfiguration & InitialConfiguration;
 
 export interface Callbacks {
-  onConnect?: () => void;
-  onMessage?: (data: any) => any;
-  onEvent?: (data: any) => any;
-  onError?: (data: any) => any;
-  onReconnect?: (data: any) => any;
-  onDisconnect?: (code?: number, reason?: string) => void;
+  onConnect(this: Client): any;
+  onMessage(
+    this: Client,
+    message:
+      | Message$Result$Success<string, string>
+      | Message$Result$Error<string, string>
+      | Message$Event
+  ): any;
+  onEvent(this: Client, data: Message$Event): any;
+  onError(this: Client, error: Message$Result$Error<string, string>): any;
+  /**
+   * Called when a reconnect begins.  Provides the total milliseconds
+   * before the reconnect attempt will occur.
+   *
+   * @memberof Callbacks
+   */
+  onWillReconnect(this: Client, ms: number): any;
+  /**
+   * Once the reconnect delay (provided by `onWillReconnect`) has expired,
+   * the `onReconnect` callback will be called indicating that the reconnect
+   * attempt is beginning.
+   *
+   * @memberof Callbacks
+   */
+  onReconnect(this: Client): any;
+  onDisconnect(this: Client, code: number, reason: string): any;
 }

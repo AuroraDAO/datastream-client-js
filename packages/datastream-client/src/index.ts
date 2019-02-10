@@ -1,27 +1,6 @@
 import * as $Datastream from '@auroradao/datastream-types';
 import { DatastreamClient } from './client';
-import { DEFAULT_CONFIG_CLIENT } from './constants';
-import { ValidationError } from './errors';
-
-/**
- * Takes the user configuration and merges it with the default
- * configuration to create an exact configuration for us to
- * use.
- */
-function createRunningConfig(
-  config: $Datastream.InitialConfiguration
-): $Datastream.Configuration {
-  if (!config.key) {
-    throw new ValidationError(
-      'validate-configuration',
-      'Failed to validation configuration, missing "key" property.  Please provide a validation API Key.'
-    );
-  }
-  return Object.freeze({
-    ...DEFAULT_CONFIG_CLIENT,
-    ...config,
-  });
-}
+import { createRunningConfig } from './config';
 
 /**
  * Creates the Datastream client based upon your
@@ -44,7 +23,7 @@ function createRunningConfig(
  */
 export default function createDatastreamClient(
   initialConfig: $Datastream.InitialConfiguration,
-  callbacks?: $Datastream.Callbacks
+  callbacks?: Partial<$Datastream.Callbacks>
 ) {
   const config = createRunningConfig(initialConfig);
   return new DatastreamClient(config, callbacks);
