@@ -197,8 +197,6 @@ interface InitialConfiguration {
 
 #### Account Events
 
-##### account_transaction_graph
-
 ##### account_nonce
 
 ##### account_deposit_complete
