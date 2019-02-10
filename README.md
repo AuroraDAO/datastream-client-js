@@ -114,7 +114,7 @@ const client = createDatastreamClient(
 
 ```javascript
 interface BufferConfiguration {
-  readonly size: number;
+  size: number;
 }
 
 interface InitialConfiguration {
@@ -124,13 +124,13 @@ interface InitialConfiguration {
    *
    * @required
    */
-  readonly key: string;
+  key: string;
   /**
    * If using a connector other than HTML5, provide
    * the connector in the initial configuration
    * here.
    */
-  readonly connector?: Connection$Connector;
+  connector?: Connection$Connector;
   /**
    * Should the client automatically maintain a persistent
    * connection to the server?
@@ -141,7 +141,7 @@ interface InitialConfiguration {
    *
    * @defaultValue true
    */
-  readonly auto?: boolean;
+  auto?: boolean;
   /**
    * Optionally provide the type of client connection
    * that should be established.
@@ -152,20 +152,20 @@ interface InitialConfiguration {
    *
    * @defaultValue "client"
    */
-  readonly type?: string;
+  type?: string;
   /**
    * Enable or disable the clients internal logging.
    *
    * @defaultValue false
    */
-  readonly log?: boolean;
+  log?: boolean;
   /**
    * Optionally provide a WebSocket URL to use instead
    * of the default server.
    *
    * @defaultValue "wss://datastream.idex.market"
    */
-  readonly url?: string;
+  url?: string;
   /**
    * A stateful client will attempt to automatically
    * restore its subscriptions and general state if
@@ -173,7 +173,7 @@ interface InitialConfiguration {
    *
    * @defaultValue false
    */
-  readonly stateful?: boolean;
+  stateful?: boolean;
   /**
    * You may optionally provide a locale which will
    * indicate what language should be returned for
@@ -186,7 +186,7 @@ interface InitialConfiguration {
    *
    * @defaultValue "en"
    */
-  readonly locale?: string;
-  readonly buffer?: BufferConfiguration;
+  locale?: string;
+  buffer?: BufferConfiguration;
 }
 ```
