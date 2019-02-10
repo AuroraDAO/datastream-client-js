@@ -107,3 +107,86 @@ const client = createDatastreamClient(
   }
 );
 ```
+
+## API Reference
+
+### Initial Configuration
+
+```javascript
+interface BufferConfiguration {
+  readonly size: number;
+}
+
+interface InitialConfiguration {
+  /**
+   * The API Key that you wish to use to authenticate
+   * with the Datastream server.
+   *
+   * @required
+   */
+  readonly key: string;
+  /**
+   * If using a connector other than HTML5, provide
+   * the connector in the initial configuration
+   * here.
+   */
+  readonly connector?: Connection$Connector;
+  /**
+   * Should the client automatically maintain a persistent
+   * connection to the server?
+   *
+   * @note
+   *  This will automatically begin connecting immediately
+   *  after the client is created.
+   *
+   * @defaultValue true
+   */
+  readonly auto?: boolean;
+  /**
+   * Optionally provide the type of client connection
+   * that should be established.
+   *
+   * @note
+   *  In most cases this should not need to be changed
+   *  from the default value.
+   *
+   * @defaultValue "client"
+   */
+  readonly type?: string;
+  /**
+   * Enable or disable the clients internal logging.
+   *
+   * @defaultValue false
+   */
+  readonly log?: boolean;
+  /**
+   * Optionally provide a WebSocket URL to use instead
+   * of the default server.
+   *
+   * @defaultValue "wss://datastream.idex.market"
+   */
+  readonly url?: string;
+  /**
+   * A stateful client will attempt to automatically
+   * restore its subscriptions and general state if
+   * it needs to reconnect at any point.
+   *
+   * @defaultValue false
+   */
+  readonly stateful?: boolean;
+  /**
+   * You may optionally provide a locale which will
+   * indicate what language should be returned for
+   * any messages or errors.
+   *
+   * @note
+   *  If a translation is not available for a given
+   *  message or error, it may instead return "en"
+   *  (English).
+   *
+   * @defaultValue "en"
+   */
+  readonly locale?: string;
+  readonly buffer?: BufferConfiguration;
+}
+```
