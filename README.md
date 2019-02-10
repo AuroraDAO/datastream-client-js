@@ -35,3 +35,34 @@ We currently maintain two packages:
 yarn add @auroradao/datastream-client
 yarn add @auroradao/datastream-connector-uws
 ```
+
+## Example (Web)
+
+```javascript
+const client = createDatastreamClient(
+  {
+    log: true,
+    key: '<API-KEY>',
+  },
+  {
+    onConnect() {
+      client.subscribe('accounts', '0x..', [
+        'account_withdrawal_dispatched',
+        'account_withdrawal_complete',
+      ]);
+    },
+    onEvent(message) {
+      switch (message.event) {
+        case 'account_withdrawal_dispatched': {
+          // handle
+          break;
+        }
+        case 'account_withdrawal_complete': {
+          // handle
+          break;
+        }
+      }
+    },
+  }
+);
+```
