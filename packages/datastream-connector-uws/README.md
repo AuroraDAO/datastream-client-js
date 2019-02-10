@@ -3,7 +3,7 @@
 Implements the datastream client connector for the `uws` package by implementing the connector interface.
 
 ```javascript
-export interface Connection$Socket {
+interface Connection$Socket {
   readonly OPEN: number;
   readonly CONNECTING: number;
   readonly CLOSING: number;
