@@ -190,3 +190,65 @@ interface InitialConfiguration {
   buffer?: BufferConfiguration;
 }
 ```
+
+### Subscriptions
+
+#### Account Events
+
+##### account_transaction_graph
+
+##### account_nonce
+
+##### account_deposit_complete
+
+##### account_orders
+
+##### account_cancels
+
+##### account_trades
+
+##### account_withdrawal_created
+
+##### account_withdrawal_dispatched
+
+##### account_withdrawal_complete
+
+##### account_order_dispatched
+
+##### account_order_complete
+
+##### account_trade_dispatched
+
+##### account_trade_complete
+
+##### account_invalidation_dispatched
+
+##### account_invalidation_complete
+
+##### account_balance_sheet
+
+##### account_rewards
+
+##### account_idxm_balance
+
+#### Market Events
+
+##### market_orders
+
+##### market_cancels
+
+##### market_trades
+
+#### Chain Events
+
+##### chain_status
+
+##### chain_server_block
+
+##### chain_symbol_usd_price
+
+##### chain_reward_pool_size
+
+##### chain_gas_price
+
+##### chain_token_list
