@@ -39,6 +39,8 @@ yarn add @auroradao/datastream-connector-uws
 ## Example (Web)
 
 ```javascript
+import createDatastreamClient from '@auroradao/datastream-client';
+
 const client = createDatastreamClient(
   {
     log: true,
@@ -63,6 +65,24 @@ const client = createDatastreamClient(
         }
       }
     },
+  }
+);
+```
+
+## Example (Node)
+
+```javascript
+import createDatastreamClient from '@auroradao/datastream-client';
+import uwsConnector from '@auroradao/datastream-connector-uws';
+
+const client = createDatastreamClient(
+  {
+    log: true,
+    key: '<API-KEY>',
+    connector: uwsConnector,
+  },
+  {
+    // callbacks
   }
 );
 ```
