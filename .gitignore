@@ -15,4 +15,3 @@ node_modules/
 *.swp
 .DS_Store
 lerna-debug.log
-wip/
