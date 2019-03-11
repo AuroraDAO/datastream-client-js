@@ -46,7 +46,7 @@ export class DatastreamClient implements $Datastream.Client {
     private readonly callbacks?: PartialCallbacks
   ) {
     if (this.config.auto) {
-      this.task.defer('client:auto-connect', () => this.connection.connect());
+      this.connection.connect();
     }
   }
 

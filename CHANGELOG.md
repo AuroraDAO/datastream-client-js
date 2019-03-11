@@ -7,28 +7,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @auroradao/datastream-client-js
 
-
-
-
-
 ## [1.1.2](https://github.com/AuroraDao/datastream-client-js/compare/v1.1.1...v1.1.2) (2019-02-11)
-
 
 ### Bug Fixes
 
-* remove module from package.json ([d3bf490](https://github.com/AuroraDao/datastream-client-js/commit/d3bf490))
-
-
-
-
+- remove module from package.json ([d3bf490](https://github.com/AuroraDao/datastream-client-js/commit/d3bf490))
 
 ## [1.1.1](https://github.com/AuroraDao/datastream-client-js/compare/v1.1.0...v1.1.1) (2019-02-10)
 
 **Note:** Version bump only for package @auroradao/datastream-client-js
-
-
-
-
 
 # 1.1.0 (2019-02-10)
 

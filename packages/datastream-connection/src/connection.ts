@@ -515,6 +515,11 @@ export default function createConnection(
           '[ERROR] | DatastreamConnection | Attempted to send an invalid message to the Datastream: "message.request was not defined"'
         );
       }
+      if (state !== STATE.HANDSHAKED && !buffer) {
+        // when no buffer is defined, we throw an error that we are
+        // not ready to send messages
+        throw new DatastreamNotReadyError(message.rid, message.request, state);
+      }
       if (!socket || (state === STATE.HANDSHAKED && !sid)) {
         // sanity check, should not occur
         console.warn(
@@ -523,28 +528,26 @@ export default function createConnection(
         console.trace();
         reconnect();
       }
-      if (state !== STATE.HANDSHAKED) {
+      if (state !== STATE.HANDSHAKED && shouldBufferRequest) {
         if (!buffer) {
-          // when no buffer is defined, we throw an error that we are
-          // not ready to send messages
+          // this should never occur, sanity check
           throw new DatastreamNotReadyError(
             message.rid,
             message.request,
             state
           );
         }
-        if (shouldBufferRequest) {
-          if (config.log) {
-            console.log(
-              `[BUFFER] | DatastreamClient | Adding request "${
-                message.request
-              }" to request buffer to be sent upon the next successful handshake`
-            );
-          }
-          buffer.add(message);
+        if (config.log) {
+          console.log(
+            `[BUFFER] | DatastreamClient | Adding request "${
+              message.request
+            }" to request buffer to be sent upon the next successful handshake`
+          );
         }
+        buffer.add(message);
         return false;
       }
+
       const packet: $Datastream.Request$Complete<RID, REQ, string> = {
         sid,
         ...message,
