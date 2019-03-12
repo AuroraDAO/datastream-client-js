@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/AuroraDAO/datastream-client-js/compare/v1.1.3...v1.2.0) (2019-03-12)
+
+
+### Features
+
+* client-side ping error catching and reporting ([b66aca0](https://github.com/AuroraDAO/datastream-client-js/commit/b66aca0))
+
+
+
+
+
 ## [1.1.3-alpha.0](https://github.com/AuroraDAO/datastream-client-js/compare/v1.1.2...v1.1.3-alpha.0) (2019-02-16)
 
 **Note:** Version bump only for package @auroradao/datastream-connector-web
