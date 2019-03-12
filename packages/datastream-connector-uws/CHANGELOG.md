@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/AuroraDAO/datastream-client-js/compare/v1.2.0...v1.2.1) (2019-03-12)
+
+
+### Bug Fixes
+
+* lock to uws 10.148.1 since 10.148.2 is broken ([3625a47](https://github.com/AuroraDAO/datastream-client-js/commit/3625a47))
+
+
+
+
+
 # [1.2.0](https://github.com/AuroraDAO/datastream-client-js/compare/v1.1.3...v1.2.0) (2019-03-12)
 
 
