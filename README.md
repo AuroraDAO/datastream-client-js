@@ -96,16 +96,11 @@ const client = createDatastreamClient(
 import createDatastreamClient from '@auroradao/datastream-client';
 import uwsConnector from '@auroradao/datastream-connector-uws';
 
-const client = createDatastreamClient(
-  {
-    log: true,
-    key: '<API-KEY>',
-    connector: uwsConnector,
-  },
-  {
-    // callbacks
-  }
-);
+const client = createDatastreamClient({
+  log: true,
+  key: '<API-KEY>',
+  connector: uwsConnector,
+});
 ```
 
 ## API Reference
