@@ -58,7 +58,7 @@ export default function createDatastreamConnector(
         })
       );
     },
-    close: socket.close,
-    terminate: socket.close,
+    close: socket.close.bind(socket),
+    terminate: socket.close.bind(socket),
   };
 }

@@ -223,16 +223,25 @@ export default function createConnection(
 
   function startPinger() {
     const ref = task.every('connection:ping', PING_INTERVAL, () => {
-      if (![STATE.CONNECTED, STATE.HANDSHAKED].includes(state)) {
-        console.warn(
-          '[WARN] | DatastreamConnection | An unexpected error condition occurred with the datastream auto-pinger, please report this to the library maintainers.'
+      try {
+        if (![STATE.CONNECTED, STATE.HANDSHAKED].includes(state)) {
+          console.warn(
+            '[WARN] | DatastreamConnection | An unexpected error condition occurred with the datastream auto-pinger, please report this to the library maintainers.'
+          );
+          console.trace();
+          task.defer('connection:deferred-reconnect', () => reconnect());
+          ref.cancel();
+          return;
+        }
+        socket.ping(sid);
+      } catch (error) {
+        console.error(
+          '[ERROR] | DatastreamConnection | A critical error occurred during a client-side ping attempt',
+          error
         );
-        console.trace();
         task.defer('connection:deferred-reconnect', () => reconnect());
         ref.cancel();
-        return;
       }
-      socket.ping(sid);
     });
   }
 
