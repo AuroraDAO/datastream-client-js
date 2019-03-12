@@ -29,8 +29,8 @@ export default function createDatastreamConnector(
         cb(err);
       }
     },
-    ping: socket.ping,
-    close: socket.close,
-    terminate: socket.terminate,
+    ping: socket.ping.bind(socket),
+    close: socket.close.bind(socket),
+    terminate: socket.terminate.bind(socket),
   };
 }

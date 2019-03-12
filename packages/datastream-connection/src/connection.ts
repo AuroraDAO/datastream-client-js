@@ -410,7 +410,6 @@ export default function createConnection(
     }
     const ms = redelay.next();
     if (config.log && ms > 0) {
-      console.log(ms);
       console.info(
         `[RECONNECT] | DatastreamConnection | Reconnecting to the Datastream after ${Math.round(
           ms / 1000
