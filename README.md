@@ -201,7 +201,7 @@ type Subscribe$Categories =
 subscribe(
   to: Subscribe$Categories,
   topics: string | string[],
-  events?: string | string[]
+  events: string | string[]
 ): Client$SendResponse<string, Subscribe$Requests>;
 ```
 
