@@ -194,27 +194,134 @@ interface InitialConfiguration {
 
 ##### account_nonce
 
+Received whenever the subscribed accounts `nonce` has been updated. This new nonce must be used as the base nonce for all future requests.
+
 ##### account_deposit_complete
+
+Received when a `deposit` is received and credited to the account. At this point the deposited funds are available for trading.
 
 ##### account_orders
 
+When the subscribed account has new `orders` received and processed by the exchange, this event will be provided including each of the `orders` that were processed in the given batch.
+
+```javascript
+{
+  eid: 'evt:U6_8jwkWFMe2',
+  event: 'account_orders',
+  seq: 9,
+  sid: 'sid:ehRMUyHAc26h',
+  payload: {
+    account: '0x...',
+    orders: [
+      {
+        id: 101010,
+        amountBuy: '205795770000',
+        amountSell: '1392477916542192014',
+        tokenBuy: '0x3db6ba6ab6f95efed1a6e794cad492faaabf294d',
+        tokenSell: '0x0000000000000000000000000000000000000000',
+        nonce: 101010,
+        hash: '0x...',
+        user: '0x...',
+        createdAt: '1969-01-01T01:01:01.000Z',
+        updatedAt: '1969-01-01T01:01:01.000Z',
+      },
+    ],
+  },
+}
+```
+
 ##### account_cancels
+
+When the subscribed account has new `cancels` received and processed by the exchange, this event will be provided including each of the `cancels` that were processed in the given batch.
+
+```javascript
+{
+  eid: 'evt:yiEXBY2UBe3e',
+  event: 'account_cancels',
+  seq: 10,
+  sid: 'sid:ehRMUyHAc26h',
+  payload: {
+    account: '0x...',
+    cancels: [
+      {
+        id: 101010,
+        market: 'ETH_LTO',
+        orderHash: '0x...',
+        createdAt: '1969-01-01T01:01:01.000Z',
+      },
+    ],
+  },
+}
+```
 
 ##### account_trades
 
+When the subscribed account has new `trades` received and processed by the exchange, this event will be provided including each of the `trades` that were processed in the given batch.
+
+```javascript
+{
+  eid: 'evt:IVKYOfslj5e7',
+  event: 'account_trades',
+  seq: 172,
+  sid: 'sid:ehRMUyHAc26h',
+  payload: {
+    account: '0x...',
+    total: 1,
+    highestTimestamp: 1552536625,
+    trades: [
+      {
+        tid: 101010,
+        type: 'buy',
+        date: '1969-01-01T01:01:01.000Z',
+        timestamp: 1552536625,
+        market: 'ETH_LTO',
+        usdValue: '411.171696117038254309',
+        price: '0.000687600842795718',
+        amount: '4557.68612841',
+        total: '3.133868823093068736',
+        taker: '0x...',
+        maker: '0x...',
+        orderHash: '0x...',
+        gasFee: '1.483418775132356598',
+        tokenBuy: '0x0000000000000000000000000000000000000000',
+        tokenSell: '0x3db6ba6ab6f95efed1a6e794cad492faaabf294d',
+        buyerFee: '4.55768612841',
+        sellerFee: '0.002193708176165148',
+        amountWei: '3133868823093068736',
+        updatedAt: '1969-01-01T01:01:01.000Z',
+      },
+    ],
+  },
+};
+```
+
 ##### account_withdrawal_created
+
+A `withdrawal` request is first received by the server and queued to be dispatched to the blockchain. At this point the `withdrawal` should be considered as `pending`.
 
 ##### account_withdrawal_dispatched
 
+A `withdrawal` request is first dispatched to the blockchain. At this point the `withdrawal` should be considered as `confirming`.
+
 ##### account_withdrawal_complete
+
+A `withdrawal` request is considered confirmed.
 
 ##### account_order_dispatched
 
+An `order` request is first dispatched to the blockchain. At this point the `order` should be considered as `confirming`.
+
 ##### account_order_complete
+
+An `order` request is considered confirmed.
 
 ##### account_trade_dispatched
 
+A `trade` request is first dispatched to the blockchain. At this point the `trade` should be considered as `confirming`.
+
 ##### account_trade_complete
+
+A `trade` request is considered confirmed.
 
 ##### account_invalidation_dispatched
 
@@ -232,9 +339,91 @@ interface InitialConfiguration {
 
 ##### market_orders
 
+```javascript
+{
+  sid: 'sid:ehRMUyHAc26h',
+  eid: 'evt:AB_9awkWFMe2',
+  event: 'market_orders',
+  seq: 229,
+  payload: {
+    market: 'ETH_LTO',
+    orders: [
+      {
+        id: 101010,
+        amountBuy: '205795770000',
+        amountSell: '1392477916542192014',
+        tokenBuy: '0x3db6ba6ab6f95efed1a6e794cad492faaabf294d',
+        tokenSell: '0x0000000000000000000000000000000000000000',
+        nonce: 101010,
+        hash: '0x...',
+        user: '0x...',
+        createdAt: '1969-01-01T01:01:01.000Z',
+        updatedAt: '1969-01-01T01:01:01.000Z',
+      },
+    ],
+  },
+}
+```
+
 ##### market_cancels
 
+```javascript
+{
+  sid: 'sid:ehRMUyHAc26h',
+  eid: 'evt:xiAXRY2UAe2b',
+  event: 'market_cancels',
+  seq: 28,
+  payload: {
+    market: 'ETH_LTO',
+    cancels: [
+      {
+        id: 101010,
+        orderHash: '0x...',
+        createdAt: '1969-01-01T01:01:01.000Z',
+      },
+    ],
+  },
+}
+```
+
 ##### market_trades
+
+```javascript
+{
+  sid: 'sid:ehRMUyHAc26h',
+  eid: 'evt:ARvEax5lj5mm',
+  event: 'market_trades',
+  seq: 199,
+  payload: {
+    market: 'ETH_LTO',
+    total: 1,
+    highestTimestamp: 1552536625,
+    trades: [
+      {
+        tid: 101010,
+        type: 'buy',
+        date: '1969-01-01T01:01:01.000Z',
+        timestamp: 1552536625,
+        market: 'ETH_LTO',
+        usdValue: '411.171696117038254309',
+        price: '0.000687600842795718',
+        amount: '4557.68612841',
+        total: '3.133868823093068736',
+        taker: '0x...',
+        maker: '0x...',
+        orderHash: '0x...',
+        gasFee: '1.483418775132356598',
+        tokenBuy: '0x0000000000000000000000000000000000000000',
+        tokenSell: '0x3db6ba6ab6f95efed1a6e794cad492faaabf294d',
+        buyerFee: '4.55768612841',
+        sellerFee: '0.002193708176165148',
+        amountWei: '3133868823093068736',
+        updatedAt: '1969-01-01T01:01:01.000Z',
+      },
+    ],
+  },
+};
+```
 
 ---
 
@@ -244,10 +433,54 @@ interface InitialConfiguration {
 
 ##### chain_server_block
 
+```javascript
+{
+  eid: 'evt:JUZEAB0hu8tJ3',
+  event: 'chain_server_block',
+  seq: 622,
+  sid: 'sid:ehRMUyHAc26h',
+  payload: { block: 7364977 },
+}
+```
+
 ##### chain_symbol_usd_price
+
+Receives the latest usd pricing used by the exchange for the given symbol.
+
+```javascript
+{
+  sid: 'sid:ehRMUyHAc26h',
+  eid: 'evt:gKefqaoPKobEz',
+  event: 'chain_symbol_usd_price',
+  seq: 618,
+  payload: { symbol: 'ETH/USD', price: 133.30 },
+}
+```
 
 ##### chain_reward_pool_size
 
+```javascript
+{
+  sid: 'sid:ehRMUyHAc26h',
+  eid: 'evt:18BKijcJMd046',
+  event: 'chain_reward_pool_size',
+  seq: 682,
+  payload: { pool: '12695555.461190489851413656' },
+}
+```
+
 ##### chain_gas_price
+
+Provides the latest gas price in GWEI used by the exchange.
+
+```javascript
+{
+  sid: 'sid:ehRMUyHAc26h',
+  eid: 'evt:E9PRHmh7XFVws',
+  event: 'chain_gas_price',
+  seq: 361,
+  payload: { price: '5' },
+}
+```
 
 ##### chain_token_list
