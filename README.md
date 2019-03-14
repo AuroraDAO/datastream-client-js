@@ -233,10 +233,10 @@ When the subscribed account has new `orders` received and processed by the excha
 
 ```javascript
 {
+  sid: 'sid:ehRMUyHAc26h',
   eid: 'evt:U6_8jwkWFMe2',
   event: 'account_orders',
   seq: 9,
-  sid: 'sid:ehRMUyHAc26h',
   payload: {
     account: '0x...',
     orders: [
@@ -263,10 +263,10 @@ When the subscribed account has new `cancels` received and processed by the exch
 
 ```javascript
 {
+  sid: 'sid:ehRMUyHAc26h',
   eid: 'evt:yiEXBY2UBe3e',
   event: 'account_cancels',
   seq: 10,
-  sid: 'sid:ehRMUyHAc26h',
   payload: {
     account: '0x...',
     cancels: [
@@ -287,10 +287,10 @@ When the subscribed account has new `trades` received and processed by the excha
 
 ```javascript
 {
+  sid: 'sid:ehRMUyHAc26h',
   eid: 'evt:IVKYOfslj5e7',
   event: 'account_trades',
   seq: 172,
-  sid: 'sid:ehRMUyHAc26h',
   payload: {
     account: '0x...',
     total: 1,
