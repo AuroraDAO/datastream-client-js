@@ -188,6 +188,34 @@ interface InitialConfiguration {
 
 ### Subscriptions
 
+#### `client.subscribe()`
+
+Subscribing to events is done by calling the `subscribe` method on a given client. This function has the signature as shown below. For the complete set of type signatures you can view them in the [Datastream Types Package](./packages/datastream-types).
+
+```javascript
+type Subscribe$Categories =
+  | 'accounts'
+  | 'markets'
+  | 'chains'
+
+subscribe(
+  to: Subscribe$Categories,
+  topics: string,
+  events?: string | string[],
+  context?: Record<string | number, any>
+): Client$SendResponse<string, Subscribe$Requests>;
+```
+
+A client may subscribe to many events for a given topic. However, each request must contain the entirety of the subscription for a given topic. For example, subscribing to multiple markets would look like this:
+
+```javascript
+client.subscribe(
+  'markets',
+  ['ETH_AURA', 'ETH_IDXM'],
+  ['market_orders', 'market_cancels', 'market_trades']
+);
+```
+
 ---
 
 #### Account Events
