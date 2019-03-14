@@ -202,7 +202,7 @@ Received when a `deposit` is received and credited to the account. At this point
 
 ##### account_orders
 
-When the subscribed account has new `orders` received and processed by the exchange, this event will be provided including each of the `orders` that were processed in the given batch.
+When the subscribed account has new `orders` received and processed by the exchange, this event will be provided including each of the `orders` that were processed in the given batch. At this point the orders should be considered `pending`.
 
 ```javascript
 {
@@ -232,7 +232,7 @@ When the subscribed account has new `orders` received and processed by the excha
 
 ##### account_cancels
 
-When the subscribed account has new `cancels` received and processed by the exchange, this event will be provided including each of the `cancels` that were processed in the given batch.
+When the subscribed account has new `cancels` received and processed by the exchange, this event will be provided including each of the `cancels` that were processed in the given batch. At this point the `cancels` should be considered `pending`.
 
 ```javascript
 {
@@ -256,7 +256,7 @@ When the subscribed account has new `cancels` received and processed by the exch
 
 ##### account_trades
 
-When the subscribed account has new `trades` received and processed by the exchange, this event will be provided including each of the `trades` that were processed in the given batch.
+When the subscribed account has new `trades` received and processed by the exchange, this event will be provided including each of the `trades` that were processed in the given batch. At this point the `trades` should be considered `pending`.
 
 ```javascript
 {
@@ -325,13 +325,17 @@ A `trade` request is considered confirmed.
 
 ##### account_invalidation_dispatched
 
+An `invalidation` request is first dispatched to the blockchain. At this point the `invalidation` should be considered as `confirming`.
+
 ##### account_invalidation_complete
+
+An `invalidation` is considered confirmed.
 
 ##### account_balance_sheet
 
-##### account_rewards
+The updated balance sheet for the account. Triggered whenever the accounts balances are updated by a given action.
 
-##### account_idxm_balance
+##### account_rewards
 
 ---
 
