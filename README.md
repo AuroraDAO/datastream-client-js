@@ -200,9 +200,8 @@ type Subscribe$Categories =
 
 subscribe(
   to: Subscribe$Categories,
-  topics: string,
-  events?: string | string[],
-  context?: Record<string | number, any>
+  topics: string | string[],
+  events?: string | string[]
 ): Client$SendResponse<string, Subscribe$Requests>;
 ```
 
