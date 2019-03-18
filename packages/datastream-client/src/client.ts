@@ -454,12 +454,16 @@ export class DatastreamClient implements $Datastream.Client {
 }
 
 const d = {
-  sid: 'sid:VtKO3C3fzJ5',
-  eid: 'evt:8tq0-D8NPwZH',
-  event: 'account_rewards',
-  seq: 7,
+  sid: 'sid:EMKKI9kym1q',
+  eid: 'evt:EbB21XwW16TP',
+  event: 'chain_status',
+  seq: 90,
   payload: {
-    account: '0x2535294827e44ae144cf23d1194cbf6adb4afc1f',
-    rewards: '602.930949384415100868',
+    status: {
+      restarting: false,
+      trades: false,
+      cancels: true,
+      withdrawals: true,
+    },
   },
 };

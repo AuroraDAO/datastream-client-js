@@ -188,6 +188,10 @@ interface InitialConfiguration {
 
 ### Subscriptions
 
+Below is the general information about the available Datastream `subscriptions`, including example payloads. \
+
+> **Important:** Values given in the example payloads are not precise examples and may be abbreviated or changed. They are only meant to represent the general form the event will take.
+
 #### `client.subscribe()`
 
 Subscribing to events is done by calling the `subscribe` method on a given client. This function has the signature as shown below. For the complete set of type signatures you can view them in the [Datastream Types Package](./packages/datastream-types).
@@ -258,7 +262,7 @@ Received when a `deposit` is received and credited to the account. At this point
   payload: {
     account: '0x...',
     deposit: {
-      id: 909090,
+      id: 348738,
       user: '0x...',
       token: '0x0000000000000000000000000000000000000000',
       amount: '1000000000000000000',
@@ -287,7 +291,7 @@ When the subscribed account has new `orders` received and processed by the excha
     account: '0x...',
     orders: [
       {
-        id: 101010,
+        id: 745729,
         amountBuy: '205795770000',
         amountSell: '1392477916542192014',
         tokenBuy: '0x3db6ba6ab6f95efed1a6e794cad492faaabf294d',
@@ -317,7 +321,7 @@ When the subscribed account has new `cancels` received and processed by the exch
     account: '0x...',
     cancels: [
       {
-        id: 101010,
+        id: 987832,
         market: 'ETH_LTO',
         orderHash: '0x...',
         createdAt: '1969-01-01T01:01:01.000Z',
@@ -343,7 +347,7 @@ When the subscribed account has new `trades` received and processed by the excha
     highestTimestamp: 1552536625,
     trades: [
       {
-        tid: 101010,
+        tid: 98989,
         type: 'buy',
         date: '1969-01-01T01:01:01.000Z',
         timestamp: 1552536625,
@@ -644,6 +648,25 @@ The updated balance sheet for the account. Triggered whenever the accounts balan
 #### Chain Events
 
 ##### chain_status
+
+When the IDEX internal backend transitions to different states, such as temporarily disabled trading, this event will be dispatched.
+
+```javascript
+{
+  sid: 'sid:EMKKI9kym1q',
+  eid: 'evt:EbB21XwW16TP',
+  event: 'chain_status',
+  seq: 90,
+  payload: {
+    status: {
+      restarting: false,
+      trades: true,
+      cancels: true,
+      withdrawals: true,
+    },
+  },
+}
+```
 
 ##### chain_server_block
 
