@@ -223,9 +223,55 @@ client.subscribe(
 
 Received whenever the subscribed accounts `nonce` has been updated. This new nonce must be used as the base nonce for all future requests.
 
+```javascript
+{
+  sid: 'sid:ehRMUyHAc26h',
+  eid: 'evt:D1_ja4kmeeDc',
+  event: 'account_none',
+  seq: 2,
+  payload: {
+    account: '0x...',
+    nonce: '999'
+  },
+}
+```
+
+> When using Javascript, it is safest to use a `BigNumber` library (or [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) if your environment supports it). Below is example code of incrementing the `nonce` value by 1 when needed using [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt):
+
+```javascript
+// nice and simple :-)
+const currentNonce = BigInt(event.payload.nonce);
+const nextNonce = currentNonce + 1n;
+```
+
 ##### account_deposit_complete
 
 Received when a `deposit` is received and credited to the account. At this point the deposited funds are available for trading.
+
+```javascript
+{
+
+  sid: 'sid:PKr79dtJs5T',
+  eid: 'evt:zIABS7OTq',
+  event: 'account_deposit_complete',
+  seq: 84,
+  payload: {
+    account: '0x...',
+    deposit: {
+      id: 909090,
+      user: '0x...',
+      token: '0x0000000000000000000000000000000000000000',
+      amount: '1000000000000000000',
+      transactionHash: '0x...',
+      createdAt: '1969-01-01T01:01:01.000Z',
+    },
+  }
+}
+```
+
+> **Note:** Deposits are not submitted using an API Request and are instead initiated directly with the IDEX Contract. This event is generated using our internal block scanner which is actively monitoring transactions on the network.
+
+> **Note:** Deposit does not have `dispatched` and `pending` events associated with them as they are directly executed on the IDEX Client and are never processed by the IDEX Backend until they are seen in the blockchain.
 
 ##### account_orders
 
@@ -326,13 +372,75 @@ When the subscribed account has new `trades` received and processed by the excha
 
 A `withdrawal` request is first received by the server and queued to be dispatched to the blockchain. At this point the `withdrawal` should be considered as `pending`.
 
+```javascript
+{
+  sid: 'sid:PKr79dtJs5T',
+  eid: 'evt:hxp4-qwiYUFk',
+  event: 'account_withdrawal_created',
+  seq: 59,
+  payload: {
+    account: [
+      '0x...',
+      '0x...',
+    ],
+    withdrawal: {
+      id: 909090,
+      user: '0x...',
+      amount: '1000000000000000000',
+      token: '0x0000000000000000000000000000000000000000',
+      nonce: 141,
+      fee: '209999999800000',
+      usdValue: '136.46',
+      createdAt: '1969-01-01T01:01:01.000Z',
+    },
+  },
+}
+```
+
 ##### account_withdrawal_dispatched
 
 A `withdrawal` request is first dispatched to the blockchain. At this point the `withdrawal` should be considered as `confirming`.
 
+```javascript
+{
+  sid: 'sid:PKr79dtJs5T',
+  eid: 'evt:6-VlUU1Wh',
+  event: 'account_withdrawal_dispatched',
+  seq: 62,
+  payload: {
+    account: ['0x...'],
+    withdrawal: {
+      sender: '0x...',
+      id: 128,
+      transactionHash: '0x...',
+    },
+  },
+}
+```
+
+> **Tip:** At this point you will receive the associated `transactionHash` since it has been sent to the blockchain for processing.
+
 ##### account_withdrawal_complete
 
 A `withdrawal` request is considered confirmed.
+
+```javascript
+{
+  sid: 'sid:PKr79dtJs5T',
+  eid: 'evt:HfW6bZhDZ',
+  event: 'account_withdrawal_complete',
+  seq: 74,
+  payload: {
+    withdrawal: {
+      sender: '0x...',
+      id: 128,
+      transactionHash: '0x...',
+      token: '0x0000000000000000000000000000000000000000',
+      amount: '1000000000000000000',
+    },
+  },
+}
+```
 
 ##### account_order_dispatched
 
@@ -346,9 +454,53 @@ An `order` request is considered confirmed.
 
 A `trade` request is first dispatched to the blockchain. At this point the `trade` should be considered as `confirming`.
 
+```javascript
+{
+  sid: 'sid:VtKO3C3fzJ5',
+  eid: 'evt:ekkwGhwT3',
+  event: 'account_trade_dispatched',
+  seq: 11,
+  payload: {
+    account: [
+      '0x...',
+      '0x...'
+    ],
+    trade: {
+      tid: 472,
+      sender: '0x...',
+      hash: '0x...',
+      transactionHash: '0x...',
+    },
+  },
+}
+```
+
+> **Tip:** In the payload, `hash` refers to the hash for the `order` while the `transactionHash` is the hash for the trade transaction which will appear on the blockchain.
+
 ##### account_trade_complete
 
 A `trade` request is considered confirmed.
+
+```javascript
+{
+  sid: 'sid:VtKO3C3fzJ5',
+  eid: 'evt:Cgle_CpBh',
+  event: 'account_trade_complete',
+  seq: 25,
+  payload: {
+    account: [
+      '0x...',
+      '0x...',
+    ],
+    trade: {
+      tid: 472,
+      sender: '0x...',
+      transactionHash: '0x...',
+      hash: '0x...',
+    },
+  },
+}
+```
 
 ##### account_invalidation_dispatched
 
@@ -360,9 +512,40 @@ An `invalidation` is considered confirmed.
 
 ##### account_balance_sheet
 
-The updated balance sheet for the account. Triggered whenever the accounts balances are updated by a given action.
+The updated balance sheet for the account. Triggered whenever the accounts balances are updated by a given action and includes all non-zero balances for the account. Balances are represented as [`WEI`](https://www.investopedia.com/terms/w/wei.asp).
+
+```javascript
+{
+  sid: 'sid:PKr79dtJs5T',
+  eid: 'evt:oMSLpNwq1fcR',
+  event: 'account_balance_sheet',
+  seq: 60,
+  payload: {
+    account: '0x...',
+    balance: {
+      '0x0000000000000000000000000000000000000000': '6656648607189529963',
+      '0x...': '36517409284907215842',
+    },
+  },
+}
+```
+
+> **Note:** Each value should be considered a `BigNumber` / `BigInt` value and should always be parsed as such. Using `Number` will almost certainly yield unwanted results.
 
 ##### account_rewards
+
+```javascript
+{
+  sid: 'sid:VtKO3C3fzJ5',
+  eid: 'evt:8tq0-D8NPwZH',
+  event: 'account_rewards',
+  seq: 7,
+  payload: {
+    account: '0x...',
+    rewards: '602.930949384415100868',
+  },
+}
+```
 
 ---
 
@@ -466,11 +649,13 @@ The updated balance sheet for the account. Triggered whenever the accounts balan
 
 ```javascript
 {
+  sid: 'sid:ehRMUyHAc26h',
   eid: 'evt:JUZEAB0hu8tJ3',
   event: 'chain_server_block',
   seq: 622,
-  sid: 'sid:ehRMUyHAc26h',
-  payload: { block: 7364977 },
+  payload: {
+    block: 7364977
+  },
 }
 ```
 
@@ -484,7 +669,10 @@ Receives the latest usd pricing used by the exchange for the given symbol.
   eid: 'evt:gKefqaoPKobEz',
   event: 'chain_symbol_usd_price',
   seq: 618,
-  payload: { symbol: 'ETH/USD', price: 133.30 },
+  payload: {
+    symbol: 'ETH/USD',
+    price: 133.30
+  },
 }
 ```
 
@@ -496,7 +684,9 @@ Receives the latest usd pricing used by the exchange for the given symbol.
   eid: 'evt:18BKijcJMd046',
   event: 'chain_reward_pool_size',
   seq: 682,
-  payload: { pool: '12695555.461190489851413656' },
+  payload: {
+    pool: '12695555.461190489851413656'
+  },
 }
 ```
 
@@ -510,8 +700,10 @@ Provides the latest gas price in GWEI used by the exchange.
   eid: 'evt:E9PRHmh7XFVws',
   event: 'chain_gas_price',
   seq: 361,
-  payload: { price: '5' },
+  payload: {
+    price: '5'
+  },
 }
 ```
 
-##### chain_token_list
+> **Note:** Please take note that the price is provided as a `string` here and not a number.
