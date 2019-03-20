@@ -11,6 +11,9 @@
     "try": "ts-node ./quick-try",
     "try:watch": "ts-node-dev --respawn ./quick-try"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@auroradao/datastream-connection": "^1.2.2",
     "@auroradao/datastream-connector-web": "^1.2.2",

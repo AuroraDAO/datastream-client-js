@@ -5,6 +5,9 @@
   "main": "lib/index.js",
   "author": "Braden R. Napier",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@auroradao/datastream-types": "^1.2.2"
   },
