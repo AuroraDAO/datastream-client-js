@@ -16,7 +16,7 @@
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:hoist": "lerna link convert",
     "lerna:publish:alpha": "cross-env HUSKY_BYPASS=true lerna publish --dist-tag alpha",
-    "lerna:publish:beta": "cross-env HUSKY_BYPASS=true lerna publish --preid beta --dist-tag next",
+    "lerna:publish:beta": "cross-env HUSKY_BYPASS=true lerna publish --dist-tag next --force-publish",
     "lerna:publish:release": "cross-env HUSKY_BYPASS=true lerna publish",
     "publish:release": "npm-run-all clean build lerna:publish:release",
     "publish:alpha": "npm-run-all clean build lerna:publish:alpha",
