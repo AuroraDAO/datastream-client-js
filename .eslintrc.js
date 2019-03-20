@@ -38,8 +38,8 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
     'import/resolver': {
-      node: {
-        extensions: ['.ts', '.tsx'],
+      typescript: {
+        directory: './packages/tsconfig.base.json',
       },
     },
   },
