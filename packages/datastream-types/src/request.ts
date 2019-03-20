@@ -1,4 +1,4 @@
-import { Task$Ref, TASK_CANCELLED } from 'task-handler';
+import { Task$Ref, Task$Handler, TASK_CANCELLED } from 'task-handler';
 
 import { PromiseConfig } from './config';
 import { DatastreamServerError } from './errors';
@@ -48,7 +48,7 @@ export interface Message$Event {
   readonly sid: string;
   readonly eid: string;
   readonly event: Message$Event$Types;
-  readonly payload: Record<string, any>;
+  readonly payload: Record<string, unknown>;
   readonly seq: number;
 }
 
@@ -60,7 +60,7 @@ export interface Message$Result$Success<
   readonly rid: RID;
   readonly sid: string;
   readonly request: REQ;
-  readonly payload: Record<string, any>;
+  readonly payload: Record<string, unknown>;
 }
 
 export interface Message$Result$Error<RID extends string, REQ extends string> {
@@ -95,13 +95,13 @@ export type Request$Job$Ref<RID extends string, REQ extends string> = Task$Ref<
   'job',
   RID,
   Message$PromiseResult<RID, REQ>,
-  any
+  Task$Handler
 >;
 
 export interface Client$SendResponse<RID extends string, REQ extends string> {
   rid: RID;
   request: REQ;
   promise(
-    promiseConfig?: PromiseConfig
+    promiseConfig?: PromiseConfig,
   ): Promise<Message$Result$Success<RID, REQ>>;
 }

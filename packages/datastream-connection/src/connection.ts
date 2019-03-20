@@ -27,6 +27,10 @@ function assertNever(event: never): never {
  */
 const STATE = $Datastream.Connection$State;
 
+interface $StringableValue {
+  toString(): string;
+}
+
 type SocketEvent$Args<
   E extends $Datastream.Connection$SocketEvents
 > = E extends 'close'
@@ -34,7 +38,7 @@ type SocketEvent$Args<
   : E extends 'open'
   ? []
   : E extends 'message'
-  ? [any]
+  ? [$StringableValue]
   : E extends 'pong'
   ? [string]
   : E extends 'error'
@@ -43,15 +47,15 @@ type SocketEvent$Args<
 
 function clearAllConnectionTasks(
   task: Task$Handler,
-  buffer?: ReturnType<typeof createBuffer>
-) {
+  buffer?: ReturnType<typeof createBuffer>,
+): void {
   task.cancel(
     'connection:flush-buffer',
     'connection:will-reconnect',
     'connection:deferred-reconnect',
     'connection:reconnect',
     'connection:ping',
-    'connection:error-reconnect'
+    'connection:error-reconnect',
   );
   if (buffer) {
     buffer.clear();
@@ -62,20 +66,20 @@ function clearAllConnectionTasks(
  * Called when the connection is in a FATAL state and any
  * type of connection is attempted
  */
-function handleFatalState() {
+function handleFatalState(): void {
   throw new Error(
-    'Connection State is FATAL and no further connection is allowed.'
+    'Connection State is FATAL and no further connection is allowed.',
   );
 }
 
 function isDatastreamEvent(
-  message: $Datastream.Message$Result$Socket<string, string>
+  message: $Datastream.Message$Result$Socket<string, string>,
 ): message is $Datastream.Message$Event {
   return (message as $Datastream.Message$Event).event !== undefined;
 }
 
 function isDatastreamResponse<RID extends string, REQ extends string>(
-  message: $Datastream.Message$Result$Socket<RID, REQ>
+  message: $Datastream.Message$Result$Socket<RID, REQ>,
 ): message is
   | $Datastream.Message$Result$Success<RID, REQ>
   | $Datastream.Message$Result$Error<RID, REQ> {
@@ -101,8 +105,8 @@ function isDatastreamResponse<RID extends string, REQ extends string>(
 export default function createConnection(
   task: Task$Handler,
   config: $Datastream.Configuration,
-  handleClientEvent: $Datastream.Client$EventHandler
-) {
+  handleClientEvent: $Datastream.Client$EventHandler,
+): $Datastream.Connection$Controller {
   const redelay = createRedelay(MAX_RECONNECT_SECONDS);
   const buffer = config.buffer ? createBuffer(config.buffer) : undefined;
 
@@ -114,20 +118,20 @@ export default function createConnection(
     packet:
       | $Datastream.Request$Complete<string, string, string>
       | $Datastream.Request<'handshake'>
-      | $Datastream.Request<'bulk'>
-  ) {
+      | $Datastream.Request<'bulk'>,
+  ): void {
     if (!socket) {
       // sanity check, shouldn't happen!
       throw new Error(
-        '[ERROR] | DatastreamConnection | Tried to send to socket before it was created, please report this to the library maintainers.'
+        '[ERROR] | DatastreamConnection | Tried to send to socket before it was created, please report this to the library maintainers.',
       );
     }
     socket.send(JSON.stringify(packet), err =>
-      err ? handleSocketEvent('error', err) : undefined
+      err ? handleSocketEvent('error', err) : undefined,
     );
   }
 
-  function flushBuffer() {
+  function flushBuffer(): void {
     if (
       !socket ||
       state !== STATE.HANDSHAKED ||
@@ -146,6 +150,30 @@ export default function createConnection(
     }
   }
 
+  function startPinger(): void {
+    const ref = task.every('connection:ping', PING_INTERVAL, () => {
+      try {
+        if (![STATE.CONNECTED, STATE.HANDSHAKED].includes(state)) {
+          console.warn(
+            '[WARN] | DatastreamConnection | An unexpected error condition occurred with the datastream auto-pinger, please report this to the library maintainers.',
+          );
+          console.trace();
+          task.defer('connection:deferred-reconnect', () => reconnect());
+          ref.cancel();
+          return;
+        }
+        socket.ping(sid);
+      } catch (error) {
+        console.error(
+          '[ERROR] | DatastreamConnection | A critical error occurred during a client-side ping attempt',
+          error,
+        );
+        task.defer('connection:deferred-reconnect', () => reconnect());
+        ref.cancel();
+      }
+    });
+  }
+
   /**
    * When data is received on the
    *
@@ -153,8 +181,11 @@ export default function createConnection(
    * @returns
    */
   function handleSocketMessage(
-    message: void | $Datastream.Message$Result$Socket<string, string>
-  ) {
+    message: void | $Datastream.Message$Result$Socket<string, string>,
+  ): void | {
+    event: 'message' | 'error' | 'handshake' | 'event';
+    message: $Datastream.Message$Result$Socket<string, string>;
+  } {
     if (!message || (!isDatastreamEvent(message) && !message.request)) {
       closeSocketIfNeeded(CLOSE_CODES.TYPE_ERROR, 'InvalidMessageType');
       reconnect();
@@ -173,7 +204,7 @@ export default function createConnection(
       switch (message.request) {
         case 'handshake': {
           if (message.result === 'success') {
-            sid = message.sid;
+            ({ sid } = message);
             state = STATE.HANDSHAKED;
             event = 'handshake';
             redelay.reset();
@@ -221,30 +252,6 @@ export default function createConnection(
     };
   }
 
-  function startPinger() {
-    const ref = task.every('connection:ping', PING_INTERVAL, () => {
-      try {
-        if (![STATE.CONNECTED, STATE.HANDSHAKED].includes(state)) {
-          console.warn(
-            '[WARN] | DatastreamConnection | An unexpected error condition occurred with the datastream auto-pinger, please report this to the library maintainers.'
-          );
-          console.trace();
-          task.defer('connection:deferred-reconnect', () => reconnect());
-          ref.cancel();
-          return;
-        }
-        socket.ping(sid);
-      } catch (error) {
-        console.error(
-          '[ERROR] | DatastreamConnection | A critical error occurred during a client-side ping attempt',
-          error
-        );
-        task.defer('connection:deferred-reconnect', () => reconnect());
-        ref.cancel();
-      }
-    });
-  }
-
   /**
    * When our `connector` provides an event from the socket, this function
    * is called to process the result.
@@ -255,7 +262,7 @@ export default function createConnection(
   function handleSocketEvent(
     event: $Datastream.Connection$SocketEvents,
     ...args: SocketEvent$Args<$Datastream.Connection$SocketEvents>
-  ) {
+  ): void {
     let asEvent: $Datastream.Connection$Events;
     let eventArgs: $Datastream.Client$EventArgs<
       Exclude<$Datastream.Connection$Events, 'reconnect' | 'will-reconnect'>
@@ -267,7 +274,7 @@ export default function createConnection(
           console.info(
             `[CONNECT] | DatastreamConnection | Connection opened with "${
               config.url
-            }", starting Datastream handshake.`
+            }", starting Datastream handshake.`,
           );
         }
         return sendToSocket(requests.handshake(config));
@@ -308,7 +315,9 @@ export default function createConnection(
       case 'message': {
         const [message] = args as SocketEvent$Args<'message'>;
         const parsed = handleSocketMessage(
-          message.toString ? JSON.parse(message.toString()) : undefined
+          message && message.toString
+            ? JSON.parse(message.toString())
+            : undefined,
         );
         if (!parsed) {
           return;
@@ -333,7 +342,7 @@ export default function createConnection(
         const [error] = args as SocketEvent$Args<'error'>;
         console.error(
           '[ERROR] | DatastreamConnection | Received a socket connection error',
-          error
+          error,
         );
         /* In the case that the socket does not call "close" as-is
            expected, we create a deferred task to reconnect which 
@@ -362,8 +371,8 @@ export default function createConnection(
    */
   function closeSocketIfNeeded(
     code: number = CLOSE_CODES.NORMAL,
-    reason?: string
-  ) {
+    reason?: string,
+  ): void {
     task.cancel('connection:ping');
     if (socket) {
       const { readyState } = socket;
@@ -371,8 +380,8 @@ export default function createConnection(
         if (config.log) {
           console.info(
             `[RESET] | DatastreamConnection | Closing Connection with code (${String(
-              code
-            )}${reason ? ` : ${reason}` : ''}) `
+              code,
+            )}${reason ? ` : ${reason}` : ''}) `,
           );
         }
         socket.close(code, reason);
@@ -385,7 +394,7 @@ export default function createConnection(
    * Called to close any sockets that may currently be opened and establish
    * a new connection with the provided `connector`.
    */
-  function resetSocketIfNeeded() {
+  function resetSocketIfNeeded(): void {
     closeSocketIfNeeded(CLOSE_CODES.RESTART, 'ConnectionReset');
     state = STATE.CONNECTING;
     socket = config.connector(
@@ -393,7 +402,7 @@ export default function createConnection(
         log: config.log,
         url: config.url,
       },
-      handleSocketEvent
+      handleSocketEvent,
     );
   }
 
@@ -404,7 +413,7 @@ export default function createConnection(
    * @param {boolean} [force=false]
    * @returns
    */
-  function reconnect(force: boolean = false) {
+  function reconnect(force: boolean = false): number {
     if (state === STATE.FATAL) {
       handleFatalState();
     }
@@ -421,8 +430,8 @@ export default function createConnection(
     if (config.log && ms > 0) {
       console.info(
         `[RECONNECT] | DatastreamConnection | Reconnecting to the Datastream after ${Math.round(
-          ms / 1000
-        )} seconds.`
+          ms / 1000,
+        )} seconds.`,
       );
     }
     closeSocketIfNeeded(CLOSE_CODES.RESTART, 'ConnectionReconnect');
@@ -432,7 +441,7 @@ export default function createConnection(
       task.after('connection:reconnect', ms, () => {
         if (config.log) {
           console.info(
-            `[RECONNECT] | DatastreamConnection | Reconnecting to the Datastream.`
+            `[RECONNECT] | DatastreamConnection | Reconnecting to the Datastream.`,
           );
         }
         handleClientEvent('reconnect');
@@ -464,6 +473,8 @@ export default function createConnection(
         case STATE.RECONNECTING:
         case STATE.CONNECTING:
           return false;
+        default:
+          break;
       }
       try {
         if (clearBufferIfNeeded && buffer) {
@@ -473,7 +484,7 @@ export default function createConnection(
           console.info(
             `[CONNECT] | DatastreamConnection | Attempting to Connect to the Datastream at: "${
               config.url
-            }"`
+            }"`,
           );
         }
         resetSocketIfNeeded();
@@ -482,7 +493,7 @@ export default function createConnection(
         // TODO: Should this only log when logging is on?
         console.warn(
           '[ERROR] | DatastreamConnection | Failed to Connect to the Datastream: ',
-          error
+          error,
         );
         state = STATE.IDLE;
         reconnect();
@@ -497,7 +508,7 @@ export default function createConnection(
     disconnect(fatal: boolean = false) {
       if (!fatal && config.log && state !== STATE.DISCONNECTED) {
         console.warn(
-          '[WARN] | DatastreamConnection | Connection is being terminated and will not reconnect until "connection.connect" is called'
+          '[WARN] | DatastreamConnection | Connection is being terminated and will not reconnect until "connection.connect" is called',
         );
       }
       state = fatal === true ? STATE.FATAL : STATE.DISCONNECTED;
@@ -516,11 +527,11 @@ export default function createConnection(
      */
     send<RID extends string, REQ extends string>(
       message: $Datastream.Request$Valid<RID, REQ>,
-      shouldBufferRequest: boolean
+      shouldBufferRequest: boolean,
     ) {
       if (!message.request) {
         throw new Error(
-          '[ERROR] | DatastreamConnection | Attempted to send an invalid message to the Datastream: "message.request was not defined"'
+          '[ERROR] | DatastreamConnection | Attempted to send an invalid message to the Datastream: "message.request was not defined"',
         );
       }
       if (state !== STATE.HANDSHAKED && !buffer) {
@@ -531,7 +542,7 @@ export default function createConnection(
       if (!socket || (state === STATE.HANDSHAKED && !sid)) {
         // sanity check, should not occur
         console.warn(
-          '[ERROR] | DatastreamConnection | "socket" or "sid" not found when it was expected, attempting to resolve.  Please report this to the library maintainers.'
+          '[ERROR] | DatastreamConnection | "socket" or "sid" not found when it was expected, attempting to resolve.  Please report this to the library maintainers.',
         );
         console.trace();
         reconnect();
@@ -542,14 +553,14 @@ export default function createConnection(
           throw new DatastreamNotReadyError(
             message.rid,
             message.request,
-            state
+            state,
           );
         }
         if (config.log) {
           console.log(
             `[BUFFER] | DatastreamClient | Adding request "${
               message.request
-            }" to request buffer to be sent upon the next successful handshake`
+            }" to request buffer to be sent upon the next successful handshake`,
           );
         }
         buffer.add(message);
@@ -572,7 +583,9 @@ export default function createConnection(
      * @param {$Datastream.Request$Valid<string, string>} message
      * @returns {boolean}
      */
-    removeFromBuffer(message: $Datastream.Request$Valid<string, string>) {
+    removeFromBuffer(
+      message: $Datastream.Request$Valid<string, string>,
+    ): boolean {
       return buffer ? buffer.remove(message) : false;
     },
   };

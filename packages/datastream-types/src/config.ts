@@ -5,6 +5,7 @@ import {
   Message$Result$Error,
   Message$Result$Success,
 } from './request';
+
 export interface BufferConfiguration {
   readonly size: number;
 }
@@ -103,25 +104,25 @@ export interface DefaultConfiguration {
 export type Configuration = DefaultConfiguration & InitialConfiguration;
 
 export interface Callbacks {
-  onConnect(this: Client): any;
+  onConnect(this: Client): void;
   onMessage(
     this: Client,
     message:
       | Message$Result$Success<string, string>
       | Message$Result$Error<string, string>
-      | Message$Event
-  ): any;
+      | Message$Event,
+  ): void;
 
-  onSuccess(this: Client, data: Message$Result$Success<string, string>): any;
-  onEvent(this: Client, data: Message$Event): any;
-  onError(this: Client, error: Message$Result$Error<string, string>): any;
+  onSuccess(this: Client, data: Message$Result$Success<string, string>): void;
+  onEvent(this: Client, data: Message$Event): void;
+  onError(this: Client, error: Message$Result$Error<string, string>): void;
   /**
    * Called when a reconnect begins.  Provides the total milliseconds
    * before the reconnect attempt will occur.
    *
    * @memberof Callbacks
    */
-  onWillReconnect(this: Client, ms: number): any;
+  onWillReconnect(this: Client, ms: number): void;
   /**
    * Once the reconnect delay (provided by `onWillReconnect`) has expired,
    * the `onReconnect` callback will be called indicating that the reconnect
@@ -129,6 +130,6 @@ export interface Callbacks {
    *
    * @memberof Callbacks
    */
-  onReconnect(this: Client): any;
-  onDisconnect(this: Client, code: number, reason: string): any;
+  onReconnect(this: Client): void;
+  onDisconnect(this: Client, code: number, reason: string): void;
 }

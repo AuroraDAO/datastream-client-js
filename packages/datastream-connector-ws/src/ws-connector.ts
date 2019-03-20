@@ -3,7 +3,7 @@ import WebSocket from 'ws';
 
 export default function createDatastreamConnector(
   config: $Datastream.Connection$Configuration,
-  callback: $Datastream.Connection$Callback
+  callback: $Datastream.Connection$Callback,
 ): $Datastream.Connection$Socket {
   const socket = new WebSocket(config.url);
 
@@ -22,7 +22,10 @@ export default function createDatastreamConnector(
     get readyState() {
       return socket.readyState;
     },
-    send(data: any, cb: (err?: Error) => void) {
+    send(
+      data: string | ArrayBuffer | Blob | ArrayBufferView,
+      cb: (err?: Error) => void,
+    ) {
       try {
         return socket.send(data, cb);
       } catch (err) {

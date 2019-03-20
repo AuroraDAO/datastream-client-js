@@ -45,7 +45,7 @@ export interface Connection$Controller {
   disconnect(fatal?: boolean | undefined): void;
   send<RID extends string, REQ extends string>(
     message: Request$Valid<RID, REQ>,
-    shouldBufferRequest: boolean
+    shouldBufferRequest: boolean,
   ): boolean;
   removeFromBuffer(message: Request$Valid<string, string>): boolean;
 }
@@ -58,7 +58,10 @@ export interface Connection$Socket {
 
   readonly readyState: number;
 
-  send(data: any, cb: (err?: Error) => void): void;
+  send(
+    data: string | ArrayBuffer | Blob | ArrayBufferView,
+    cb: (err?: Error) => void,
+  ): void;
   close(code?: number, reason?: string): void;
   ping(sid: string): void;
   terminate(): void;
@@ -69,10 +72,10 @@ export interface Connection$Callback {
   (event: 'close', code: number, reason: string, clean: boolean): void;
   (event: 'error', error: Error): void;
   (event: 'pong', data: string): void;
-  (event: 'message', data: any): void;
+  (event: 'message', data: string | ArrayBuffer | Blob | ArrayBufferView): void;
 }
 
 export type Connection$Connector = (
   config: Connection$Configuration,
-  callback: Connection$Callback
+  callback: Connection$Callback,
 ) => Connection$Socket;

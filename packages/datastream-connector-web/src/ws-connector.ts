@@ -5,14 +5,16 @@ const PONG_RE = /^[^{]*{[^"]*"pong"[^:]*:"[^:]+:[^"]+"[^}"a-zA-Z0-9]*}/;
 
 export default function createDatastreamConnector(
   config: $Datastream.Connection$Configuration,
-  callback: $Datastream.Connection$Callback
+  callback: $Datastream.Connection$Callback,
 ): $Datastream.Connection$Socket {
   const socket = new WebSocket(config.url);
 
   socket.addEventListener('open', () => callback('open'));
+
   socket.addEventListener('close', ({ code, reason, wasClean }) =>
-    callback('close', code, reason, wasClean)
+    callback('close', code, reason, wasClean),
   );
+
   socket.addEventListener('message', event => {
     /* ping max length is 25 characters, check if the response
        is a "pong" response without parsing it needlessly so
@@ -23,9 +25,10 @@ export default function createDatastreamConnector(
     }
     callback('message', event.data);
   });
+
   socket.addEventListener('error', () =>
     /* We don't get any real information on web */
-    callback('error', new Error('ConnectionError'))
+    callback('error', new Error('ConnectionError')),
   );
 
   return {
@@ -36,7 +39,10 @@ export default function createDatastreamConnector(
     get readyState() {
       return socket.readyState;
     },
-    send(data: any, cb: (err?: Error) => void) {
+    send(
+      data: string | ArrayBuffer | Blob | ArrayBufferView,
+      cb: (err?: Error) => void,
+    ) {
       try {
         socket.send(data);
         cb();
@@ -55,7 +61,7 @@ export default function createDatastreamConnector(
       socket.send(
         JSON.stringify({
           ping: sid,
-        })
+        }),
       );
     },
     close: socket.close.bind(socket),

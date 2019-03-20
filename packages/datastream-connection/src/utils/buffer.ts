@@ -2,14 +2,32 @@
 import * as $Datastream from '@auroradao/datastream-types';
 import requests from '../requests';
 
-export function createBuffer(config: $Datastream.BufferConfiguration) {
+interface Buffer$Instance {
+  length: number;
+  add(request: $Datastream.Request<string>): boolean;
+  remove(request: $Datastream.Request<string>): boolean;
+  clear(): void;
+  flush(): void | $Datastream.Request<'bulk'>;
+}
+
+/**
+ * A factory function that returns an instance to aid in
+ * buffering commands during reconnect sequences.
+ *
+ * @export
+ * @param {$Datastream.BufferConfiguration} config
+ * @returns {Buffer$Instance}
+ */
+export function createBuffer(
+  config: $Datastream.BufferConfiguration,
+): Buffer$Instance {
   let queue: string[] = [];
 
   return {
-    get length() {
+    get length(): number {
       return queue.length;
     },
-    add(request: $Datastream.Request<any>) {
+    add(request: $Datastream.Request<string>): boolean {
       const str = JSON.stringify(request);
       if (queue.includes(str)) {
         return false;
@@ -20,7 +38,7 @@ export function createBuffer(config: $Datastream.BufferConfiguration) {
       queue.push(str);
       return true;
     },
-    remove(request: $Datastream.Request<any>) {
+    remove(request: $Datastream.Request<string>): boolean {
       if (queue.length === 0) {
         return false;
       }
@@ -29,7 +47,7 @@ export function createBuffer(config: $Datastream.BufferConfiguration) {
       queue = queue.filter(v => v !== str);
       return queue.length !== prevLength;
     },
-    clear() {
+    clear(): void {
       queue = [];
     },
     flush(): void | $Datastream.Request<'bulk'> {

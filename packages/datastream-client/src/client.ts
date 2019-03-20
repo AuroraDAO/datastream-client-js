@@ -1,7 +1,12 @@
 import createConnection from '@auroradao/datastream-connection';
 import * as $Datastream from '@auroradao/datastream-types';
 
-import createTaskHandler, { Task$Ref, TASK_CANCELLED } from 'task-handler';
+import createTaskHandler, {
+  Task$Ref,
+  Task$Types,
+  Task$Handler,
+  TASK_CANCELLED,
+} from 'task-handler';
 
 import { modifyRunningConfig } from './config';
 import { DEFAULT_CONFIG_PROMISE, TO_REQUEST } from './constants';
@@ -17,13 +22,20 @@ import { createRequestID } from './utils';
 
 type PartialCallbacks = Partial<$Datastream.Callbacks>;
 
-type Any$Ref = Task$Ref<any, any, any, any>;
+type Any$Ref = Task$Ref<Task$Types, unknown, unknown, Task$Handler>;
 
 function assertNever(event: never): never {
   console.error(
-    `[ERROR] | DatastreamClient | Unhandled connection event "${event}"`
+    `[ERROR] | DatastreamClient | Unhandled connection event "${event}"`,
   );
   return event;
+}
+
+function parseRawTopicsOrEvents(
+  value: void | string[] | string,
+): undefined | string[] {
+  if (!value) return undefined;
+  return Array.isArray(value) ? value : [value];
 }
 
 /**
@@ -31,6 +43,10 @@ function assertNever(event: never): never {
  * client state and request handling.
  */
 export class DatastreamClient implements $Datastream.Client {
+  private readonly config: $Datastream.Configuration;
+
+  private readonly callbacks?: PartialCallbacks;
+
   private queue: Map<string, Any$Ref> = new Map();
 
   private task = createTaskHandler();
@@ -38,23 +54,25 @@ export class DatastreamClient implements $Datastream.Client {
   private connection = createConnection(
     this.task,
     this.config,
-    this.handleEvent.bind(this)
+    this.handleEvent.bind(this),
   );
 
-  constructor(
-    private readonly config: $Datastream.Configuration,
-    private readonly callbacks?: PartialCallbacks
+  public constructor(
+    config: $Datastream.Configuration,
+    callbacks?: PartialCallbacks,
   ) {
+    this.config = config;
+    this.callbacks = callbacks;
     if (this.config.auto) {
       this.connection.connect();
     }
   }
 
-  public get connected() {
+  public get connected(): boolean {
     return this.connection.connected;
   }
 
-  public get log() {
+  public get log(): boolean {
     return this.config.log;
   }
 
@@ -67,7 +85,7 @@ export class DatastreamClient implements $Datastream.Client {
   public set log(to: boolean) {
     if (typeof to !== 'boolean') {
       throw new TypeError(
-        '[ERROR] | DatastreamClient | client.logging must be a boolean value.'
+        '[ERROR] | DatastreamClient | client.logging must be a boolean value.',
       );
     }
     modifyRunningConfig(this.config, {
@@ -82,7 +100,7 @@ export class DatastreamClient implements $Datastream.Client {
    *
    * @memberof DatastreamClient
    */
-  public get locale() {
+  public get locale(): string {
     return this.config.locale || 'en';
   }
 
@@ -102,8 +120,8 @@ export class DatastreamClient implements $Datastream.Client {
    *
    * @memberof DatastreamClient
    */
-  public connect() {
-    return this.connection.connect();
+  public connect(): boolean {
+    return Boolean(this.connection.connect());
   }
 
   /**
@@ -111,7 +129,7 @@ export class DatastreamClient implements $Datastream.Client {
    *
    * @memberof DatastreamClient
    */
-  public disconnect() {
+  public disconnect(): void {
     return this.connection.disconnect();
   }
 
@@ -131,9 +149,9 @@ export class DatastreamClient implements $Datastream.Client {
   public send<RID extends string, REQ extends string>(
     this: this,
     request: REQ,
-    payload: Record<string | number, any> = {},
+    payload: Record<string | number, unknown> = {},
     shouldBufferRequest: boolean = Boolean(this.config.buffer),
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): $Datastream.Client$SendResponse<RID, REQ> {
     if (context && this.config.type !== 'proxy') {
       throw new ValidationError('client.send', '"context" is not allowed');
@@ -141,7 +159,7 @@ export class DatastreamClient implements $Datastream.Client {
     if (typeof payload !== 'object') {
       throw new ValidationError(
         'client.send',
-        '"payload" should be an object type'
+        '"payload" should be an object type',
       );
     }
     const rid: RID = createRequestID();
@@ -159,7 +177,7 @@ export class DatastreamClient implements $Datastream.Client {
       rid,
       request,
       promise: async (
-        promiseConfig: $Datastream.PromiseConfig = DEFAULT_CONFIG_PROMISE
+        promiseConfig: $Datastream.PromiseConfig = DEFAULT_CONFIG_PROMISE,
       ) => {
         if (!ref) {
           ref = this.createPromisedRequest(
@@ -167,7 +185,7 @@ export class DatastreamClient implements $Datastream.Client {
             request,
             message,
             sent,
-            promiseConfig
+            promiseConfig,
           );
         }
         try {
@@ -199,27 +217,23 @@ export class DatastreamClient implements $Datastream.Client {
     to: $Datastream.Subscribe$Categories,
     topics: string,
     rawEvents?: string | string[],
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): $Datastream.Client$SendResponse<string, $Datastream.Subscribe$Requests> {
     if (!topics) {
       throw new ValidationError(
         'client.subscribe',
-        '"topics" must be a string defining the topic for-which you wish to subscribe.'
+        '"topics" must be a string defining the topic for-which you wish to subscribe.',
       );
     }
     const request = TO_REQUEST[to];
     if (!request) {
       throw new ValidationError(
         'client.subscribe',
-        `"to" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${to}"`
+        `"to" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${to}"`,
       );
     }
 
-    const events: undefined | string[] = rawEvents
-      ? Array.isArray(rawEvents)
-        ? rawEvents
-        : [rawEvents]
-      : undefined;
+    const events: undefined | string[] = parseRawTopicsOrEvents(rawEvents);
 
     return this.send(
       request,
@@ -229,7 +243,7 @@ export class DatastreamClient implements $Datastream.Client {
         events,
       },
       !this.config.stateful,
-      context
+      context,
     );
   }
 
@@ -245,20 +259,18 @@ export class DatastreamClient implements $Datastream.Client {
   public unsubscribe(
     from: $Datastream.Subscribe$Categories,
     rawTopics?: string | string[],
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): $Datastream.Client$SendResponse<string, $Datastream.Subscribe$Requests> {
     const request = TO_REQUEST[from];
     if (!request) {
       throw new ValidationError(
         'client.unsubscribe',
-        `"from" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${from}"`
+        `"from" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${from}"`,
       );
     }
-    const topics: undefined | string[] = rawTopics
-      ? Array.isArray(rawTopics)
-        ? rawTopics
-        : [rawTopics]
-      : undefined;
+
+    const topics: undefined | string[] = parseRawTopicsOrEvents(rawTopics);
+
     return this.send(
       request,
       {
@@ -266,7 +278,7 @@ export class DatastreamClient implements $Datastream.Client {
         topics,
       },
       !this.config.stateful,
-      context
+      context,
     );
   }
 
@@ -280,20 +292,20 @@ export class DatastreamClient implements $Datastream.Client {
    */
   public clear(
     from: $Datastream.Subscribe$Categories,
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): $Datastream.Client$SendResponse<string, $Datastream.Subscribe$Requests> {
     const request = TO_REQUEST[from];
     if (!request) {
       throw new ValidationError(
         'client.clear',
-        `"from" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${from}"`
+        `"from" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${from}"`,
       );
     }
     return this.send(
       request,
       { action: 'clear' },
       !this.config.stateful,
-      context
+      context,
     );
   }
 
@@ -309,7 +321,7 @@ export class DatastreamClient implements $Datastream.Client {
   private handleEvent(
     event: $Datastream.Connection$Events,
     ...args: $Datastream.Client$EventArgs<$Datastream.Connection$Events>
-  ) {
+  ): unknown {
     if (event === 'message' || event === 'error') {
       const [data] = args as $Datastream.Client$EventArgs<'message' | 'error'>;
       const ref = this.queue.get(data.rid);
@@ -324,8 +336,8 @@ export class DatastreamClient implements $Datastream.Client {
           new DatastreamServerError(
             data.rid,
             data.request,
-            data.payload.message
-          )
+            data.payload.message,
+          ),
         );
       }
     }
@@ -419,9 +431,9 @@ export class DatastreamClient implements $Datastream.Client {
     request: REQ,
     message: $Datastream.Request$Valid<RID, REQ>,
     alreadySent: boolean,
-    { timeout }: $Datastream.PromiseConfig
-  ) {
-    let timeoutID: NodeJS.Timeout;
+    { timeout }: $Datastream.PromiseConfig,
+  ): $Datastream.Request$Job$Ref<RID, REQ> {
+    let timeoutID: number;
     return this.task.job(rid, ref => ({
       start: () => {
         this.queue.set(rid, ref);
@@ -438,9 +450,8 @@ export class DatastreamClient implements $Datastream.Client {
             // HOWEVER, this will give a false positive if the
             // request was removed due to the maxBufferSize removing
             // it for now.
-            const sent = alreadySent
-              ? alreadySent
-              : !this.connection.removeFromBuffer(message);
+            const sent =
+              alreadySent || !this.connection.removeFromBuffer(message);
             return ref.reject(new DatastreamTimeoutError(rid, request, sent));
           }, timeout);
         }
@@ -452,18 +463,3 @@ export class DatastreamClient implements $Datastream.Client {
     }));
   }
 }
-
-const d = {
-  sid: 'sid:EMKKI9kym1q',
-  eid: 'evt:EbB21XwW16TP',
-  event: 'chain_status',
-  seq: 90,
-  payload: {
-    status: {
-      restarting: false,
-      trades: false,
-      cancels: true,
-      withdrawals: true,
-    },
-  },
-};

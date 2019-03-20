@@ -1,11 +1,21 @@
 {
-  "prettier.tslintIntegration": true,
+  "bracket-pair-colorizer-2.showBracketsInGutter": true,
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.reportStyleChecksAsWarnings": false,
-  "tslint.alwaysShowRuleFailuresAsWarnings": false,
+  "prettier.eslintIntegration": true,
   "typescript.validate.enable": true,
   "javascript.validate.enable": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.tslint": true
-  }
+  "eslint.packageManager": "yarn",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "bracket-pair-colorizer-2.colors": [
+    "Gold",
+    "burlywood",
+    "ForestGreen",
+    "sienna"
+  ]
 }

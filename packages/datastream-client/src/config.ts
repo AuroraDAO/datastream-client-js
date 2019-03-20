@@ -4,8 +4,8 @@ import { ValidationError } from './errors';
 
 export function modifyRunningConfig(
   config: $Datastream.Configuration,
-  update: $Datastream.ConfigurationUpdater
-) {
+  update: $Datastream.ConfigurationUpdater,
+): void {
   Object.assign(config, {
     locale: typeof update.locale === 'string' ? update.locale : config.locale,
     log: typeof update.log === 'boolean' ? update.log : config.log,
@@ -18,12 +18,12 @@ export function modifyRunningConfig(
  * use.
  */
 export function createRunningConfig(
-  config: $Datastream.InitialConfiguration
+  config: $Datastream.InitialConfiguration,
 ): $Datastream.Configuration {
   if (!config.key) {
     throw new ValidationError(
       'validate-configuration',
-      'Failed to validation configuration, missing "key" property.  Please provide a validation API Key.'
+      'Failed to validation configuration, missing "key" property.  Please provide a validation API Key.',
     );
   }
   return {

@@ -192,6 +192,8 @@ Below is the general information about the available Datastream `subscriptions`,
 
 > **Important:** Values given in the example payloads are not precise examples and may be abbreviated or changed. They are only meant to represent the general form the event will take.
 
+> **Reminder:** `0x0000000000000000000000000000000000000000` represents `ETH` whenever it is provided for a given address.
+
 #### `client.subscribe()`
 
 Subscribing to events is done by calling the `subscribe` method on a given client. This function has the signature as shown below. For the complete set of type signatures you can view them in the [Datastream Types Package](./packages/datastream-types).
@@ -446,14 +448,6 @@ A `withdrawal` request is considered confirmed.
 }
 ```
 
-##### account_order_dispatched
-
-An `order` request is first dispatched to the blockchain. At this point the `order` should be considered as `confirming`.
-
-##### account_order_complete
-
-An `order` request is considered confirmed.
-
 ##### account_trade_dispatched
 
 A `trade` request is first dispatched to the blockchain. At this point the `trade` should be considered as `confirming`.
@@ -669,6 +663,8 @@ When the IDEX internal backend transitions to different states, such as temporar
 ```
 
 ##### chain_server_block
+
+This event is dispatched to provide the current block that the IDEX Backend is currently processing. It does not necessarily indicate the current block that the network itself is on at any given dispatch.
 
 ```javascript
 {

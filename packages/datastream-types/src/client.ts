@@ -44,26 +44,26 @@ export interface Client {
   send<RID extends string, REQ extends string>(
     this: this,
     request: REQ,
-    payload?: undefined | Record<string | number, any>,
+    payload?: undefined | Record<string | number, unknown>,
     shouldBufferRequest?: boolean,
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): Client$SendResponse<RID, REQ>;
 
   subscribe(
     to: Subscribe$Categories,
     topics: string,
     events?: string | string[],
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): Client$SendResponse<string, Subscribe$Requests>;
 
   unsubscribe(
     from: Subscribe$Categories,
     topics: string | string[],
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): Client$SendResponse<string, Subscribe$Requests>;
 
   clear(
     from: Subscribe$Categories,
-    context?: Record<string | number, any>
+    context?: Record<string | number, unknown>,
   ): Client$SendResponse<string, Subscribe$Requests>;
 }

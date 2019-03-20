@@ -23,8 +23,8 @@ import { createRunningConfig } from './config';
  */
 export default function createDatastreamClient(
   initialConfig: $Datastream.InitialConfiguration,
-  callbacks?: Partial<$Datastream.Callbacks>
-) {
+  callbacks?: Partial<$Datastream.Callbacks>,
+): DatastreamClient {
   const config = createRunningConfig(initialConfig);
   return new DatastreamClient(config, callbacks);
 }

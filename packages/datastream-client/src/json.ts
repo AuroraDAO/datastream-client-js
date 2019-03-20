@@ -8,7 +8,7 @@ export function tryParseJSON(value: string): string | object {
   }
   try {
     return JSON.parse(value);
-    // tslint:disable-next-line: no-empty
+    // eslint-disable-next-line no-empty
   } catch {}
   return value;
 }
