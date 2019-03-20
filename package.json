@@ -15,7 +15,7 @@
     "lint": "eslint --ext .ts ./packages/**/src/**",
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:hoist": "lerna link convert",
-    "lerna:publish:alpha": "cross-env HUSKY_BYPASS=true lerna publish --preid alpha --dist-tag alpha --force-publish",
+    "lerna:publish:alpha": "cross-env HUSKY_BYPASS=true lerna publish",
     "lerna:publish:beta": "cross-env HUSKY_BYPASS=true lerna publish --preid beta --dist-tag next",
     "lerna:publish:release": "cross-env HUSKY_BYPASS=true lerna publish",
     "publish:release": "npm-run-all clean build lerna:publish:release",
