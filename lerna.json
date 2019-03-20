@@ -1,9 +1,8 @@
 {
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "conventionalCommits": true,
-  "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "1.2.2"
+  "version": "1.2.2",
+  "npmClient": "yarn",
+  "npmClientArgs": ["--no-lockfile"]
 }
