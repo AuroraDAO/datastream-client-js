@@ -242,8 +242,9 @@ export default function createConnection(
 
     if (event === 'error') {
       withMessage.payload.message =
-        JSON.parse(withMessage.payload.message)[config.locale] ||
-        withMessage.payload.message;
+        typeof withMessage.payload.message === 'string'
+          ? JSON.parse(withMessage.payload.message)[config.locale]
+          : withMessage.payload.message;
     }
 
     return {

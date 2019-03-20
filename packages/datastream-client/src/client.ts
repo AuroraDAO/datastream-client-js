@@ -336,7 +336,7 @@ export class DatastreamClient implements $Datastream.Client {
           new DatastreamServerError(
             data.rid,
             data.request,
-            data.payload.message,
+            String(data.payload.message),
           ),
         );
       }

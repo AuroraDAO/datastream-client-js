@@ -1,6 +1,10 @@
 import * as $Datastream from '@auroradao/datastream-types';
 import WebSocket from 'ws';
 
+function toArrayBuffer(data: Buffer): ArrayBuffer {
+  return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+}
+
 export default function createDatastreamConnector(
   config: $Datastream.Connection$Configuration,
   callback: $Datastream.Connection$Callback,
@@ -10,7 +14,13 @@ export default function createDatastreamConnector(
   socket
     .on('open', () => callback('open'))
     .on('close', (code, reason) => callback('close', code, reason, true))
-    .on('message', data => callback('message', data))
+    .on('message', data => {
+      if (Buffer.isBuffer(data) || Array.isArray(data)) {
+        const buf = Array.isArray(data) ? Buffer.concat(data) : data;
+        return callback('message', toArrayBuffer(buf));
+      }
+      return callback('message', data);
+    })
     .on('pong', data => callback('pong', data.toString()))
     .on('error', error => callback('error', error));
 
