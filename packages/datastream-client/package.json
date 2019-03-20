@@ -7,12 +7,49 @@
   "repository": "git@github.com:AuroraDAO/datastream-client.git",
   "author": "Braden R. Napier, Juraj Husar",
   "license": "MIT",
+  "reveal": true,
+  "keywords": [
+    "idex",
+    "cryptocurrency",
+    "exchange",
+    "bitcoin",
+    "ethereum",
+    "decentralized",
+    "trading",
+    "websocket",
+    "realtime",
+    "subscriptions",
+    "datastream",
+    "typescript"
+  ],
   "scripts": {
+    "test:unit": "cd tests && cross-env NODE_ENV=test nyc mocha --require ts-node/register --recursive ./unit/*.ts",
+    "test": "npm-run-all -p test:*",
     "try": "ts-node ./quick-try",
     "try:watch": "ts-node-dev --respawn ./quick-try"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "all": true
   },
   "dependencies": {
     "@auroradao/datastream-connection": "^1.3.1",
@@ -21,5 +58,10 @@
     "shortid": "^2.2.14",
     "task-handler": "^2.10.0"
   },
-  "gitHead": "8b4e841c882a851459b342c871840733f2145563"
+  "gitHead": "8b4e841c882a851459b342c871840733f2145563",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-deep-match": "^1.2.1",
+    "mocha": "^6.0.2"
+  }
 }

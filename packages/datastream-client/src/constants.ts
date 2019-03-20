@@ -19,7 +19,7 @@ export const DEFAULT_CONFIG_CLIENT: $Datastream.DefaultConfiguration = Object.fr
     stateful: false,
     url: 'wss://datastream.idex.market',
     connector: WebConnector,
-  }
+  },
 );
 
 /**

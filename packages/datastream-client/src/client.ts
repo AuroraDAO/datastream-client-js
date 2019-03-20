@@ -24,15 +24,14 @@ type PartialCallbacks = Partial<$Datastream.Callbacks>;
 
 type Any$Ref = Task$Ref<Task$Types, unknown, unknown, Task$Handler>;
 
-function assertNever(event: never): never {
-  console.error(
+export function assertNever(event: never): never {
+  throw new Error(
     `[ERROR] | DatastreamClient | Unhandled connection event "${event}"`,
   );
-  return event;
 }
 
-function parseRawTopicsOrEvents(
-  value: void | string[] | string,
+export function parseRawTopicsOrEvents(
+  value: void | null | false | 0 | string[] | string,
 ): undefined | string[] {
   if (!value) return undefined;
   return Array.isArray(value) ? value : [value];

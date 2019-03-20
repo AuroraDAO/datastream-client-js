@@ -20,10 +20,16 @@ export function modifyRunningConfig(
 export function createRunningConfig(
   config: $Datastream.InitialConfiguration,
 ): $Datastream.Configuration {
+  if (!config) {
+    throw new ValidationError(
+      'validate-configuration',
+      'Failed to validation configuration, no configuration was provided when attempting to create the Datastream Client.',
+    );
+  }
   if (!config.key) {
     throw new ValidationError(
       'validate-configuration',
-      'Failed to validation configuration, missing "key" property.  Please provide a validation API Key.',
+      'Failed to validation configuration, missing "key" property.  Please provide a valid Datastream API Key.',
     );
   }
   return {

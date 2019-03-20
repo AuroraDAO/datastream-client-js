@@ -1,22 +1,18 @@
 import * as $Datastream from '@auroradao/datastream-types';
 
-// tslint:disable-next-line: max-classes-per-file
-export class ValidationError extends Error
+export class ValidationError<D extends string> extends Error
   implements $Datastream.ValidationError {
-  public readonly name: 'ValidationError';
+  public readonly name: 'ValidationError' = 'ValidationError';
 
-  public readonly during: string;
+  public readonly during: D;
 
-  public constructor(during: string, str: string) {
-    const message = `[ERROR] | datastream-client | ${during} | ${str}`;
-    super(message);
+  public constructor(during: D, str: string) {
+    super(`[ERROR] | datastream-client | ${during} | ${str}`);
     // Error.captureStackTrace(this, ValidationError);
-    this.name = 'ValidationError';
     this.during = during;
   }
 }
 
-// tslint:disable-next-line: max-classes-per-file
 export class DatastreamCancellationError<RID extends string, REQ extends string>
   extends Error
   implements $Datastream.DatastreamCancellationError<RID, REQ> {
@@ -33,7 +29,6 @@ export class DatastreamCancellationError<RID extends string, REQ extends string>
   }
 }
 
-// tslint:disable-next-line: max-classes-per-file
 export class DatastreamServerError<
   RID extends string,
   REQ extends string
@@ -51,7 +46,6 @@ export class DatastreamServerError<
   }
 }
 
-// tslint:disable-next-line: max-classes-per-file
 export class DatastreamTimeoutError<
   REQ extends string,
   RID extends string

@@ -5,6 +5,21 @@
   "main": "lib/index.js",
   "author": "Braden R. Napier",
   "license": "MIT",
+  "reveal": true,
+  "keywords": [
+    "idex",
+    "cryptocurrency",
+    "exchange",
+    "bitcoin",
+    "ethereum",
+    "decentralized",
+    "trading",
+    "websocket",
+    "realtime",
+    "subscriptions",
+    "datastream",
+    "typescript"
+  ],
   "publishConfig": {
     "access": "public"
   },

@@ -1,9 +1,0 @@
-theme: jekyll-theme-cayman
-
-title: IDEX Datastream Specification
-description: A complete specification for communicating with the IDEX realtime API
-
-markdown: kramdown
-kramdown:
-  input: GFM
-#highlighter: rouge
