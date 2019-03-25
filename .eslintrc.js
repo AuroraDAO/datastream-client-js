@@ -23,6 +23,9 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-console': 'off',
     'no-underscore-dangle': 'off',
+    // broken with tsc type aliases for now
+    // waiting for my PR to merge before re-enable
+    'import/named': 'warn',
     // typescript type imports suffer from this
     'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',

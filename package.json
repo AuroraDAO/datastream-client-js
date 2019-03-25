@@ -21,7 +21,7 @@
     "publish:release": "npm-run-all clean build lerna:publish:release",
     "publish:alpha": "npm-run-all clean build lerna:publish:alpha",
     "publish:beta": "npm-run-all clean build lerna:publish:beta",
-    "test:quick": "npm-run-all build:all test:quick:run",
+    "test:quick": "npm-run-all build test:quick:run",
     "test:quick:run": "ts-node-dev --respawn tests/quick.ts"
   },
   "devDependencies": {

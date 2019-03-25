@@ -42,8 +42,6 @@ export function parseRawTopicsOrEvents(
  * client state and request handling.
  */
 export class DatastreamClient implements $Datastream.Client {
-  private readonly config: $Datastream.Configuration;
-
   private readonly callbacks?: PartialCallbacks;
 
   private queue: Map<string, Any$Ref> = new Map();
@@ -57,10 +55,12 @@ export class DatastreamClient implements $Datastream.Client {
   );
 
   public constructor(
-    config: $Datastream.Configuration,
+    // needed here for the connection
+    // establishment to work as needed
+    // eslint-disable-next-line @typescript-eslint/no-parameter-properties
+    private readonly config: $Datastream.Configuration,
     callbacks?: PartialCallbacks,
   ) {
-    this.config = config;
     this.callbacks = callbacks;
     if (this.config.auto) {
       this.connection.connect();
@@ -432,7 +432,7 @@ export class DatastreamClient implements $Datastream.Client {
     alreadySent: boolean,
     { timeout }: $Datastream.PromiseConfig,
   ): $Datastream.Request$Job$Ref<RID, REQ> {
-    let timeoutID: number;
+    let timeoutID: NodeJS.Timeout;
     return this.task.job(rid, ref => ({
       start: () => {
         this.queue.set(rid, ref);

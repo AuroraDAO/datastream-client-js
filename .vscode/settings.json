@@ -2,9 +2,9 @@
   "bracket-pair-colorizer-2.showBracketsInGutter": true,
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.reportStyleChecksAsWarnings": false,
-  "prettier.eslintIntegration": true,
   "typescript.validate.enable": true,
   "javascript.validate.enable": true,
+  "prettier.eslintIntegration": true,
   "eslint.packageManager": "yarn",
   "eslint.validate": [
     "javascript",

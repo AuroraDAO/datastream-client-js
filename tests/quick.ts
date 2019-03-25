@@ -8,28 +8,22 @@ import wsConnector from '../packages/datastream-connector-uws';
 createDatastreamClient(
   {
     log: true,
-    url: 'wss://datastream-test.idex.market',
+    url: 'wss://datastream.idex.market',
     key: '17paIsICur8sA0OBqG6dH5G1rmrHNMwt4oNk4iX9',
     connector: wsConnector,
   },
   {
     onConnect() {
       console.log('Connected!');
-      this.subscribe('chains', 'eth', ['chain_symbol_usd_price']);
-      this.send('badRequest');
-      this.send('getGasPrice')
-        .promise({ timeout: 1000 })
-        .then(result => {
-          console.log('Gas Price: ', result);
-        })
-        .catch(err => {
-          console.log('Failed to get Gas Price: ', err);
-        });
+      this.subscribe('chains', 'eth', [
+        'chain_symbol_usd_price',
+        'chain_24hr_usd_volume',
+      ]);
     },
     onMessage(message) {
       console.log('Message Received: ', message);
     },
-  }
+  },
 );
 
 console.log('Client Created');

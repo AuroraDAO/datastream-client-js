@@ -107,6 +107,7 @@ export default function createConnection(
   config: $Datastream.Configuration,
   handleClientEvent: $Datastream.Client$EventHandler,
 ): $Datastream.Connection$Controller {
+  console.log('Create Connection with Config: ', config);
   const redelay = createRedelay(MAX_RECONNECT_SECONDS);
   const buffer = config.buffer ? createBuffer(config.buffer) : undefined;
 
