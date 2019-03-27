@@ -107,7 +107,6 @@ export default function createConnection(
   config: $Datastream.Configuration,
   handleClientEvent: $Datastream.Client$EventHandler,
 ): $Datastream.Connection$Controller {
-  console.log('Create Connection with Config: ', config);
   const redelay = createRedelay(MAX_RECONNECT_SECONDS);
   const buffer = config.buffer ? createBuffer(config.buffer) : undefined;
 
@@ -173,6 +172,19 @@ export default function createConnection(
         ref.cancel();
       }
     });
+  }
+
+  function parseDatastreamError(str: string): string {
+    try {
+      // errors may provide all locale values stringified, otherwise it will
+      // be a standard string and cause an error here.
+      const message = JSON.parse(str);
+      return message[config.locale] || message.en || message;
+    } catch {
+      // if an error then we likely receive a standard error format such as
+      // { message: "Invalid Payload" } without translations.
+      return str;
+    }
   }
 
   /**
@@ -242,10 +254,11 @@ export default function createConnection(
     }
 
     if (event === 'error') {
-      withMessage.payload.message =
-        typeof withMessage.payload.message === 'string'
-          ? JSON.parse(withMessage.payload.message)[config.locale]
-          : withMessage.payload.message;
+      if (typeof withMessage.payload.message === 'string') {
+        withMessage.payload.message = parseDatastreamError(
+          withMessage.payload.message,
+        );
+      }
     }
 
     return {
