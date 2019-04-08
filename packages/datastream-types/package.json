@@ -1,5 +1,5 @@
 {
-  "name": "@auroradao/datastream-types",
+  "name": "datastream-types-htfx",
   "version": "1.4.0",
   "description": "Typedefs for the @auroradao/datastream-client",
   "main": "lib/index.js",

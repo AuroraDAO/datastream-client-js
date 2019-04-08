@@ -1,5 +1,5 @@
 {
-  "name": "@auroradao/datastream-connector-web",
+  "name": "datastream-connector-web-htfx",
   "version": "1.4.0",
   "description": "Connector to use the ws package with the @auroradao/datastream-client",
   "main": "lib/index.js",
