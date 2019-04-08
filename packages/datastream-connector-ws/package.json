@@ -1,6 +1,6 @@
 {
   "name": "datastream-connector-ws-htfx",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "description": "Connector to use the ws package with the @auroradao/datastream-client",
   "main": "lib/index.js",
   "author": "Braden R. Napier",

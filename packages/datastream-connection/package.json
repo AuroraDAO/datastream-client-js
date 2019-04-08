@@ -1,6 +1,6 @@
 {
   "name": "datastream-connection-htfx",
-  "version": "1.4.1",
+  "version": "1.5.1",
   "description": "Internal package called by @auroradao/datastream-client which maintains the provided connector.",
   "main": "lib/index.js",
   "author": "Braden R. Napier",

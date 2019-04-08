@@ -1,6 +1,6 @@
 {
   "name": "datastream-client-htfx",
-  "version": "1.4.1",
+  "version": "1.5.1",
   "description": "Easily connect with the IDEX Datastream API",
   "main": "lib/index.js",
   "source": "src/index.ts",

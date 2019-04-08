@@ -1,6 +1,6 @@
 {
   "name": "datastream-types-htfx",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "description": "Typedefs for the @auroradao/datastream-client",
   "main": "lib/index.js",
   "author": "Braden R. Napier",
