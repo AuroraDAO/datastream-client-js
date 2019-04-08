@@ -56,7 +56,7 @@
     "@auroradao/datastream-connector-web": "^1.4.0",
     "@auroradao/datastream-types": "^1.4.0",
     "shortid": "^2.2.14",
-    "task-handler": "^2.11.0"
+    "task-handler": "^2.12.0"
   },
   "gitHead": "8b4e841c882a851459b342c871840733f2145563",
   "devDependencies": {
