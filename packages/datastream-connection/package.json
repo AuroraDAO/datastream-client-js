@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@auroradao/datastream-types": "^1.4.0",
-    "task-handler": "^2.11.0"
+    "task-handler-htfx": "^3.0.0"
   },
   "gitHead": "8b4e841c882a851459b342c871840733f2145563"
 }
