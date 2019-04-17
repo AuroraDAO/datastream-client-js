@@ -41,6 +41,7 @@ export interface Connection$Controller {
   readonly sid: string;
   readonly connected: boolean;
   readonly state: Connection$State;
+  reconnect(): void;
   connect(clearBufferIfNeeded?: boolean | undefined): boolean | void;
   disconnect(fatal?: boolean | undefined): void;
   send<RID extends string, REQ extends string>(
@@ -48,6 +49,7 @@ export interface Connection$Controller {
     shouldBufferRequest: boolean,
   ): boolean;
   removeFromBuffer(message: Request$Valid<string, string>): boolean;
+  reset(): void;
 }
 
 export interface Connection$Socket {

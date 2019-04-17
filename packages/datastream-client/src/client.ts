@@ -92,6 +92,38 @@ export class DatastreamClient implements $Datastream.Client {
     });
   }
 
+  public get key(): undefined | string {
+    return this.config.key;
+  }
+
+  /**
+   * Sets the `key` value of the config, reconnect
+   * required for the key to go into effect.
+   */
+  public set key(key: undefined | string) {
+    if (key !== this.config.key) {
+      modifyRunningConfig(this.config, { key });
+      this.connection.reset();
+      this.connection.reconnect();
+    }
+  }
+
+  public get token(): undefined | string {
+    return this.config.token;
+  }
+
+  /**
+   * Sets the `token` config option, will be sent on reconnect
+   * to be validated.
+   */
+  public set token(token: undefined | string) {
+    if (token !== this.config.token) {
+      modifyRunningConfig(this.config, { token });
+      this.connection.reset();
+      this.connection.reconnect();
+    }
+  }
+
   /**
    * Get the current locale being used by the client.  Locale
    * will determine how various error messages are returned

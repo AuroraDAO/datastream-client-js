@@ -6,9 +6,13 @@ export function modifyRunningConfig(
   config: $Datastream.Configuration,
   update: $Datastream.ConfigurationUpdater,
 ): void {
+  const hasToken = Object.prototype.hasOwnProperty.call(update, 'token');
+  const hasKey = Object.prototype.hasOwnProperty.call(update, 'key');
   Object.assign(config, {
     locale: typeof update.locale === 'string' ? update.locale : config.locale,
     log: typeof update.log === 'boolean' ? update.log : config.log,
+    token: hasToken ? update.token : config.token,
+    key: hasKey ? update.key : config.token,
   });
 }
 
@@ -26,10 +30,10 @@ export function createRunningConfig(
       'Failed to validation configuration, no configuration was provided when attempting to create the Datastream Client.',
     );
   }
-  if (!config.key) {
+  if (!config.key && !config.token) {
     throw new ValidationError(
       'validate-configuration',
-      'Failed to validation configuration, missing "key" property.  Please provide a valid Datastream API Key.',
+      'Failed to validation configuration, missing one of either "key" or "token" property.  Please provide a valid Datastream API Key or Token.',
     );
   }
   return {

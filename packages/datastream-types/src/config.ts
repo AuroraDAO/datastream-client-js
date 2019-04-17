@@ -25,9 +25,18 @@ export interface InitialConfiguration {
    * The API Key that you wish to use to authenticate
    * with the Datastream server.
    *
-   * @required
+   * @note
+   *  Either `key` or `token` is required
    */
-  readonly key: string;
+  readonly key?: string;
+  /**
+   * Tokens are allowed in place of `key` values to authenticate using
+   * authorized JWT Token payloads.
+   *
+   * @note
+   *  You probably want to authenticate using `key`.
+   */
+  readonly token?: string;
   readonly connector?: Connection$Connector;
   /**
    * Should the client automatically maintain a persistent

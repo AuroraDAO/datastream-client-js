@@ -432,7 +432,7 @@ export default function createConnection(
     if (state === STATE.FATAL) {
       handleFatalState();
     }
-    if (!config.auto) {
+    if (!config.auto && !force) {
       // do not allow reconnect
       return Infinity;
     }
@@ -531,6 +531,10 @@ export default function createConnection(
       closeSocketIfNeeded(CLOSE_CODES.LEAVING, 'ConnectionDisconnect');
     },
 
+    reconnect() {
+      reconnect(true);
+    },
+
     /**
      *
      *
@@ -602,6 +606,16 @@ export default function createConnection(
       message: $Datastream.Request$Valid<string, string>,
     ): boolean {
       return buffer ? buffer.remove(message) : false;
+    },
+
+    /**
+     * Resets a FATAL state if it exists and is only applicable when the `token` or `key` has been
+     * changed.
+     */
+    reset() {
+      if (state === STATE.FATAL) {
+        state = STATE.IDLE;
+      }
     },
   };
 

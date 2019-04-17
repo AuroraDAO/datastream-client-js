@@ -10,7 +10,7 @@ export default {
     }),
   }),
   handshake: (
-    config: $Datastream.Configuration
+    config: $Datastream.Configuration,
   ): $Datastream.Request<'handshake'> => ({
     request: 'handshake',
     payload: JSON.stringify({
@@ -18,6 +18,7 @@ export default {
       type: config.type,
       version: PROTOCOL_VERSION,
       key: config.key,
+      token: config.token,
     }),
   }),
 };
