@@ -17,5 +17,6 @@
     "burlywood",
     "ForestGreen",
     "sienna"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

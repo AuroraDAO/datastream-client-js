@@ -1,17 +1,24 @@
 {
+  "include": [],
   "files": [],
   "references": [
     {
-      "path": "datastream-client"
+      "path": "./datastream-types"
     },
     {
-      "path": "datastream-connector-ws"
+      "path": "./datastream-client"
     },
     {
-      "path": "datastream-errors"
+      "path": "./datastream-connection"
     },
     {
-      "path": "datastream-types"
+      "path": "./datastream-connector-ws"
+    },
+    {
+      "path": "./datastream-connector-uws"
+    },
+    {
+      "path": "./datastream-connector-web"
     }
   ]
 }

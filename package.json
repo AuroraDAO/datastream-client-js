@@ -9,9 +9,11 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm-run-all lint -p build:*",
-    "build:packages": "tsc -b packages/datastream-types packages/datastream-client packages/datastream-connection packages/datastream-connector-ws packages/datastream-connector-uws packages/datastream-connector-web",
-    "clean": "rimraf packages/**/lib",
+    "build": "npm-run-all clean lint -p build:*",
+    "build:packages": "tsc -b packages/tsconfig.json --verbose",
+    "clean": "npm-run-all -p clean:*",
+    "clean:tsc": "tsc -b packages/tsconfig.json --clean",
+    "clean:libs": "rimraf packages/**/lib",
     "lint": "eslint --ext .ts ./packages/**/src/**",
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:hoist": "lerna link convert",

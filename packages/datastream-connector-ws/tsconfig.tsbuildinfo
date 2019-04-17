@@ -89,54 +89,6 @@
         "version": "ed9a9c274875b161a3a85c148e3b9c92f4d9cb3320c348038b65f7be8205bde2",
         "signature": "ed9a9c274875b161a3a85c148e3b9c92f4d9cb3320c348038b65f7be8205bde2"
       },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/close-handlers.ts": {
-        "version": "534874591f0749d4759e8a25f8dae5dd394be5dd140b747d1d8c158606d06f43",
-        "signature": "b29e605547f12be67962116e0c9fca26881d0d6cfd1542a8baae100daa59dc76"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/constants.ts": {
-        "version": "24bd7ed89683d292911ec773f439e72099318b73814c7f11b7d07b380a6be221",
-        "signature": "062462b2c2278645e7bcb43e6c01455726a77f207f871f971b80bd4919aa408b"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/errors.ts": {
-        "version": "3888a7acec3144a4d20bb745fda14d8106f6668fc5b3c5ac2088e69507b1bd18",
-        "signature": "971be02a527d8bd8aa24ef6afcdcbfd735edea95b9ec7c2fe7e36e63e05688d4"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/requests.ts": {
-        "version": "466650ad97ee4453b8341bb92dd01ec04f0a05178374522c8b2d718a18ea6378",
-        "signature": "f67c38505f989181fd9127cc9c83b312c1ac5389e004dfaba14a8ff73a4d2bcb"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/buffer.ts": {
-        "version": "25f151055e1f8eb56428f34d3019e5dbea21908371139f1683627a7883d83d00",
-        "signature": "26f927df097a1ffaf212b27150b37b580cd7763b1513789808af25b90ec6bf76"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/redelay.ts": {
-        "version": "e931a806069ea5e0b19ddc53b206c81c11dcc9cc673f7e4ccf16f540817e2250",
-        "signature": "aabeee92ce5eebac0c9e520ab0c0a0920586cb0760d3e3f8666392e60d8c2d0b"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/connection.ts": {
-        "version": "59a07c8d0c814f56a19f039d0233cf81724df95e17a0530f62f142d9c68d2eca",
-        "signature": "c25ec5856fb0c541e805b9c62e1910e4cedf673850ce7b259ea7dd1070fe2187"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/index.ts": {
-        "version": "e20a8a44a7dfcaa82c361ce600370a870cd18f8b729014cc04bb299d9af36062",
-        "signature": "2993464480045d9f208bcc701be927b314ccbf962722c751c20992d0b66e292e"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/chai/index.d.ts": {
-        "version": "c465afa89ac28f74167a2ee7c3c6eb8dd1245c2b3bdaa4704d58d35b932de4b7",
-        "signature": "c465afa89ac28f74167a2ee7c3c6eb8dd1245c2b3bdaa4704d58d35b932de4b7"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/events/index.d.ts": {
-        "version": "400db42c3a46984118bff14260d60cec580057dc1ab4c2d7310beb643e4f5935",
-        "signature": "400db42c3a46984118bff14260d60cec580057dc1ab4c2d7310beb643e4f5935"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/json5/index.d.ts": {
-        "version": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538",
-        "signature": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/mocha/index.d.ts": {
-        "version": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102",
-        "signature": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102"
-      },
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/globals.d.ts": {
         "version": "dc88533742721bfe3c4acc3a7f3ab31cce82e50ba63a1a9a52f1351a213ed7be",
         "signature": "dc88533742721bfe3c4acc3a7f3ab31cce82e50ba63a1a9a52f1351a213ed7be"
@@ -152,6 +104,10 @@
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/buffer.d.ts": {
         "version": "0029844dd04c58540723cab6aaed359bd6230920861eebcf796a4f4882a2eb08",
         "signature": "0029844dd04c58540723cab6aaed359bd6230920861eebcf796a4f4882a2eb08"
+      },
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/events/index.d.ts": {
+        "version": "400db42c3a46984118bff14260d60cec580057dc1ab4c2d7310beb643e4f5935",
+        "signature": "400db42c3a46984118bff14260d60cec580057dc1ab4c2d7310beb643e4f5935"
       },
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/child_process.d.ts": {
         "version": "189c3bedd42b030955dd8a3fe2bca8eb5c8c9780ef9d6a4daa02e9f1c67f3f8c",
@@ -301,6 +257,30 @@
         "version": "957a9f6de19a7ae3d7a97c08374ae2f731cb2467ad64116247f16deceaaa1224",
         "signature": "957a9f6de19a7ae3d7a97c08374ae2f731cb2467ad64116247f16deceaaa1224"
       },
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts": {
+        "version": "72b8e5974345f122fb42452ab341cbcbe9835e973db4979862e973ab7d6091aa",
+        "signature": "72b8e5974345f122fb42452ab341cbcbe9835e973db4979862e973ab7d6091aa"
+      },
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/ws-connector.ts": {
+        "version": "2c5388bba1a343ff64820d6e44d6c74b63e29bcf9bc179cb66ab85cedace2949",
+        "signature": "21baee9fd57b4d9451d806ad2d603100efa326831a56420059e907f27b57a7f4"
+      },
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/index.ts": {
+        "version": "c5c802172a820e94b81959c1249f6a6969163db56f1348c280d0dac657de835e",
+        "signature": "f015a87950bf715ef6d719f6acc96e9fa3cd733ca1b4dfdbb287da582bcd770b"
+      },
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/chai/index.d.ts": {
+        "version": "c465afa89ac28f74167a2ee7c3c6eb8dd1245c2b3bdaa4704d58d35b932de4b7",
+        "signature": "c465afa89ac28f74167a2ee7c3c6eb8dd1245c2b3bdaa4704d58d35b932de4b7"
+      },
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/json5/index.d.ts": {
+        "version": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538",
+        "signature": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538"
+      },
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/mocha/index.d.ts": {
+        "version": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102",
+        "signature": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102"
+      },
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/shortid/index.d.ts": {
         "version": "30783d97bd0231ae2c4b9320043d61442a8177e81c7df826a5536b95fdd63280",
         "signature": "30783d97bd0231ae2c4b9320043d61442a8177e81c7df826a5536b95fdd63280"
@@ -316,10 +296,6 @@
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/uws/index.d.ts": {
         "version": "083e0e7914ff14b1c3d9e1da26b8c65a9a82cc8af0b705f383cd5ab9521085b9",
         "signature": "083e0e7914ff14b1c3d9e1da26b8c65a9a82cc8af0b705f383cd5ab9521085b9"
-      },
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts": {
-        "version": "72b8e5974345f122fb42452ab341cbcbe9835e973db4979862e973ab7d6091aa",
-        "signature": "72b8e5974345f122fb42452ab341cbcbe9835e973db4979862e973ab7d6091aa"
       }
     },
     "options": {
@@ -358,9 +334,9 @@
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
       "sourceRoot": "src",
-      "rootDir": "/Users/Shared/Development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src",
-      "outDir": "/Users/Shared/Development/projects/@auroradao/datastream-client-public/packages/datastream-connection/lib",
-      "configFilePath": "/Users/Shared/Development/projects/@auroradao/datastream-client-public/packages/datastream-connection/tsconfig.json"
+      "rootDir": "/Users/Shared/Development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src",
+      "outDir": "/Users/Shared/Development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/lib",
+      "configFilePath": "/Users/Shared/Development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/tsconfig.json"
     },
     "referencedMap": {
       "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/src/client.ts": [
@@ -387,30 +363,6 @@
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/request.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/errors.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/client.d.ts"
-      ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/close-handlers.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts"
-      ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/requests.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/constants.ts"
-      ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/buffer.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/requests.ts"
-      ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/connection.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/task-handler/dist/index.d.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/constants.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/errors.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/buffer.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/redelay.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/close-handlers.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/requests.ts"
-      ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/index.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/connection.ts"
       ],
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/child_process.d.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/events.d.ts",
@@ -543,14 +495,21 @@
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/worker_threads.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/zlib.d.ts"
       ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/uws/index.d.ts": [
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/events.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/http.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/https.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/net.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/index.d.ts"
       ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts": [
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/ws-connector.ts": [
+        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts",
+        "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts"
+      ],
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/index.ts": [
+        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/ws-connector.ts"
+      ],
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/uws/index.d.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/events.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/http.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/https.d.ts",
@@ -559,13 +518,6 @@
       ]
     },
     "exportedModulesMap": {
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/connection.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/task-handler/dist/index.d.ts",
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts"
-      ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/index.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/connection.ts"
-      ],
       "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/src/request.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/task-handler/dist/index.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/config.d.ts",
@@ -578,14 +530,11 @@
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/errors.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/client.d.ts"
       ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/buffer.ts": [
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/ws-connector.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts"
       ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/requests.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts"
-      ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/close-handlers.ts": [
-        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/index.d.ts"
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/index.ts": [
+        "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/ws-connector.ts"
       ],
       "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/src/connection.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/lib/request.d.ts"
@@ -642,14 +591,14 @@
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/worker_threads.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/zlib.d.ts"
       ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts": [
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/uws/index.d.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/events.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/http.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/https.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/net.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/index.d.ts"
       ],
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/uws/index.d.ts": [
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts": [
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/events.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/http.d.ts",
         "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/https.d.ts",
@@ -769,22 +718,11 @@
       "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/src/request.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/src/connection.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-types/src/index.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/close-handlers.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/constants.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/errors.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/requests.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/buffer.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/utils/redelay.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/connection.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connection/src/index.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/chai/index.d.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/events/index.d.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/json5/index.d.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/mocha/index.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/globals.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/assert.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/async_hooks.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/buffer.d.ts",
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/events/index.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/child_process.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/cluster.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/console.d.ts",
@@ -822,11 +760,16 @@
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/worker_threads.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/zlib.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/node/index.d.ts",
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts",
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/ws-connector.ts",
+      "/users/shared/development/projects/@auroradao/datastream-client-public/packages/datastream-connector-ws/src/index.ts",
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/chai/index.d.ts",
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/json5/index.d.ts",
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/mocha/index.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/shortid/index.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/strip-bom/index.d.ts",
       "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/strip-json-comments/index.d.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/uws/index.d.ts",
-      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/ws/index.d.ts"
+      "/users/shared/development/projects/@auroradao/datastream-client-public/node_modules/@types/uws/index.d.ts"
     ]
   },
   "version": "3.4.3"
