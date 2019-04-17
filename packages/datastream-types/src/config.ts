@@ -18,6 +18,8 @@ export interface BufferConfiguration {
 export interface ConfigurationUpdater {
   locale?: string;
   log?: boolean;
+  token?: void | string;
+  key?: void | string;
 }
 
 export interface InitialConfiguration {
