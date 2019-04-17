@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/AuroraDAO/datastream-client-js/compare/v1.5.0...v1.6.0) (2019-04-17)
+
+
+### Features
+
+* allow token config and setters for key/token ([94fe260](https://github.com/AuroraDAO/datastream-client-js/commit/94fe260))
+* upgrade to typescript 3.4 ([feee265](https://github.com/AuroraDAO/datastream-client-js/commit/feee265))
+
+
+
+
+
 # [1.5.0](https://github.com/AuroraDAO/datastream-client-js/compare/v1.4.1...v1.5.0) (2019-04-08)
 
 
