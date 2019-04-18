@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.4](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.3...v1.6.4) (2019-04-18)
+
+
+### Bug Fixes
+
+* handle reconnect() request so we dont schedule twice ([9b0ef0e](https://github.com/AuroraDao/datastream-client-js/commit/9b0ef0e))
+
+
+
+
+
 ## [1.6.3](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.2...v1.6.3) (2019-04-18)
 
 
