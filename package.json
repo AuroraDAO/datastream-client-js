@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "npm-run-all clean lint -p build:*",
-    "build:packages": "tsc -b packages/tsconfig.json --verbose",
+    "build:packages": "tsc -b packages/tsconfig.json",
     "clean": "npm-run-all -p clean:*",
     "clean:tsc": "tsc -b packages/tsconfig.json --clean",
     "clean:libs": "rimraf packages/**/lib",

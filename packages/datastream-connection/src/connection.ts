@@ -442,7 +442,10 @@ export default function createConnection(
     }
     if (force) {
       redelay.reset();
-    } else if (task.has('connection:reconnect')) {
+    } else if (
+      task.has('connection:reconnect') ||
+      task.has('connection:will-reconnect')
+    ) {
       return Infinity;
     }
     const ms = redelay.next();
@@ -453,6 +456,7 @@ export default function createConnection(
         )} seconds.`,
       );
     }
+    state = STATE.DISCONNECTED;
     closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'ConnectionReconnect');
     state = STATE.RECONNECTING;
     task.defer(
@@ -544,7 +548,7 @@ export default function createConnection(
 
     reconnect(): void {
       if (STATE.HANDSHAKED || STATE.CONNECTED) {
-        reconnect(true);
+        reconnect();
       }
     },
 
