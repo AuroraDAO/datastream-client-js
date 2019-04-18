@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.7](https://github.com/AuroraDAO/datastream-client-js/compare/v1.6.6...v1.6.7) (2019-04-18)
+
+
+### Bug Fixes
+
+* fix typing for web shims for reconnect ([5699f66](https://github.com/AuroraDAO/datastream-client-js/commit/5699f66))
+* only call socket.close in web if socket open ([2a0c998](https://github.com/AuroraDAO/datastream-client-js/commit/2a0c998))
+
+
+
+
+
 ## [1.6.6](https://github.com/AuroraDAO/datastream-client-js/compare/v1.6.5...v1.6.6) (2019-04-18)
 
 
