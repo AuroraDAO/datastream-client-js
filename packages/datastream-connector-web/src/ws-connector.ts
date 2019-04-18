@@ -12,11 +12,12 @@ export default function createDatastreamConnector(
   // socket, we need to track and close it later
   // instead
   let isClosed = false;
+  let closeArgs = [];
   const socket = new WebSocket(config.url);
 
   socket.addEventListener('open', () => {
     if (isClosed) {
-      return socket.close();
+      return socket.close(...closeArgs);
     }
     return callback('open');
   });
@@ -75,12 +76,22 @@ export default function createDatastreamConnector(
       );
     },
     close(...args) {
-      isClosed = true;
-      return socket.close(...args);
+      if (!isClosed) {
+        isClosed = true;
+        if (socket.readyState === socket.OPEN) {
+          return socket.close(...args);
+        }
+        closeArgs = args;
+      }
     },
     terminate(...args) {
-      isClosed = true;
-      return socket.close(...args);
+      if (!isClosed) {
+        isClosed = true;
+        if (socket.readyState === socket.OPEN) {
+          return socket.close(...args);
+        }
+        closeArgs = args;
+      }
     },
   };
 }
