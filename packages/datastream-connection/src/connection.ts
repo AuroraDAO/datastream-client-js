@@ -204,12 +204,12 @@ export default function createConnection(
     message: $Datastream.Message$Result$Socket<string, string>;
   } {
     if (!message || (!isDatastreamEvent(message) && !message.request)) {
-      closeSocketIfNeeded(CLOSE_CODES.TYPE_ERROR, 'InvalidMessageType');
+      closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'InvalidMessageType');
       reconnect();
       return;
     }
     if (state === STATE.HANDSHAKED && (!message.sid || message.sid !== sid)) {
-      closeSocketIfNeeded(CLOSE_CODES.PROTOCOL, 'SessionIDMismatch');
+      closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'SessionIDMismatch');
       reconnect();
       return;
     }
@@ -326,7 +326,7 @@ export default function createConnection(
       case 'pong': {
         const [response] = args as SocketEvent$Args<'pong'>;
         if (!sid || response !== sid) {
-          closeSocketIfNeeded(CLOSE_CODES.PROTOCOL, 'SessionIDMismatch');
+          closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'SessionIDMismatch');
           reconnect();
         }
         return;
@@ -414,7 +414,7 @@ export default function createConnection(
    * a new connection with the provided `connector`.
    */
   function resetSocketIfNeeded(): void {
-    closeSocketIfNeeded(CLOSE_CODES.RESTART, 'ConnectionReset');
+    closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'ConnectionReset');
     state = STATE.CONNECTING;
     socket = config.connector(
       {
@@ -453,7 +453,7 @@ export default function createConnection(
         )} seconds.`,
       );
     }
-    closeSocketIfNeeded(CLOSE_CODES.RESTART, 'ConnectionReconnect');
+    closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'ConnectionReconnect');
     state = STATE.RECONNECTING;
     task.defer(
       'connection:will-reconnect',
@@ -539,7 +539,7 @@ export default function createConnection(
       }
       state = fatal === true ? STATE.FATAL : STATE.DISCONNECTED;
       clearAllConnectionTasks(task, buffer);
-      closeSocketIfNeeded(CLOSE_CODES.LEAVING, 'ConnectionDisconnect');
+      closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'ConnectionDisconnect');
     },
 
     reconnect(): void {
