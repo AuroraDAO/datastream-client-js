@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.8](https://github.com/AuroraDAO/datastream-client-js/compare/v1.6.7...v1.6.8) (2019-04-18)
+
+
+### Bug Fixes
+
+* back to close on closed or closing ([b192a77](https://github.com/AuroraDAO/datastream-client-js/commit/b192a77))
+
+
+
+
+
 ## [1.6.6](https://github.com/AuroraDAO/datastream-client-js/compare/v1.6.5...v1.6.6) (2019-04-18)
 
 
