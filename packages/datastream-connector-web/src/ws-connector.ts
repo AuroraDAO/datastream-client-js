@@ -7,9 +7,19 @@ export default function createDatastreamConnector(
   config: $Datastream.Connection$Configuration,
   callback: $Datastream.Connection$Callback,
 ): $Datastream.Connection$Socket {
+  // due to the webs websocket implementation
+  // throwing an error if you close a CONNECTING
+  // socket, we need to track and close it later
+  // instead
+  let isClosed = false;
   const socket = new WebSocket(config.url);
 
-  socket.addEventListener('open', () => callback('open'));
+  socket.addEventListener('open', () => {
+    if (isClosed) {
+      return socket.close();
+    }
+    return callback('open');
+  });
 
   socket.addEventListener('close', ({ code, reason, wasClean }) =>
     callback('close', code, reason, wasClean),
@@ -64,7 +74,13 @@ export default function createDatastreamConnector(
         }),
       );
     },
-    close: socket.close.bind(socket),
-    terminate: socket.close.bind(socket),
+    close(...args) {
+      isClosed = true;
+      return socket.close(...args);
+    },
+    terminate(...args) {
+      isClosed = true;
+      return socket.close(...args);
+    },
   };
 }
