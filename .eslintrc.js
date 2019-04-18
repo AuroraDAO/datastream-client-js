@@ -13,6 +13,7 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-use-before-define': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
     // cant handle Category$Name at the moment, although
     // pascal case should be enforced.
     '@typescript-eslint/class-name-casing': 'off',

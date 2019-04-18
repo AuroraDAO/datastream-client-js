@@ -151,27 +151,31 @@ export default function createConnection(
   }
 
   function startPinger(): void {
-    const ref = task.every('connection:ping', PING_INTERVAL, () => {
-      try {
-        if (![STATE.CONNECTED, STATE.HANDSHAKED].includes(state)) {
-          console.warn(
-            '[WARN] | DatastreamConnection | An unexpected error condition occurred with the datastream auto-pinger, please report this to the library maintainers.',
+    const ref = task.every(
+      'connection:ping',
+      PING_INTERVAL,
+      (): void => {
+        try {
+          if (![STATE.CONNECTED, STATE.HANDSHAKED].includes(state)) {
+            console.warn(
+              '[WARN] | DatastreamConnection | An unexpected error condition occurred with the datastream auto-pinger, please report this to the library maintainers.',
+            );
+            console.trace();
+            task.defer('connection:deferred-reconnect', () => reconnect());
+            ref.cancel();
+            return;
+          }
+          socket.ping(sid);
+        } catch (error) {
+          console.error(
+            '[ERROR] | DatastreamConnection | A critical error occurred during a client-side ping attempt',
+            error,
           );
-          console.trace();
           task.defer('connection:deferred-reconnect', () => reconnect());
           ref.cancel();
-          return;
         }
-        socket.ping(sid);
-      } catch (error) {
-        console.error(
-          '[ERROR] | DatastreamConnection | A critical error occurred during a client-side ping attempt',
-          error,
-        );
-        task.defer('connection:deferred-reconnect', () => reconnect());
-        ref.cancel();
-      }
-    });
+      },
+    );
   }
 
   function parseDatastreamError(str: string): string {
@@ -451,37 +455,44 @@ export default function createConnection(
     }
     closeSocketIfNeeded(CLOSE_CODES.RESTART, 'ConnectionReconnect');
     state = STATE.RECONNECTING;
-    task.defer('connection:will-reconnect', () => {
-      handleClientEvent('will-reconnect', ms);
-      task.after('connection:reconnect', ms, () => {
-        if (config.log) {
-          console.info(
-            `[RECONNECT] | DatastreamConnection | Reconnecting to the Datastream.`,
-          );
-        }
-        handleClientEvent('reconnect');
-        resetSocketIfNeeded();
-      });
-    });
+    task.defer(
+      'connection:will-reconnect',
+      (): void => {
+        handleClientEvent('will-reconnect', ms);
+        task.after(
+          'connection:reconnect',
+          ms,
+          (): void => {
+            if (config.log) {
+              console.info(
+                `[RECONNECT] | DatastreamConnection | Reconnecting to the Datastream.`,
+              );
+            }
+            handleClientEvent('reconnect');
+            resetSocketIfNeeded();
+          },
+        );
+      },
+    );
     return ms;
   }
 
   // console.log(task, config, handleEvent);
 
   const connection: $Datastream.Connection$Controller = {
-    get sid() {
+    get sid(): string {
       return sid;
     },
 
-    get connected() {
+    get connected(): boolean {
       return state === STATE.HANDSHAKED;
     },
 
-    get state() {
+    get state(): $Datastream.Connection$State {
       return state;
     },
 
-    connect(clearBufferIfNeeded?: boolean) {
+    connect(clearBufferIfNeeded?: boolean): void | boolean {
       switch (state) {
         case STATE.FATAL:
           return handleFatalState();
@@ -520,7 +531,7 @@ export default function createConnection(
      * this is called, the only time the socket will reconnect is if
      * `connection.connect` is called at a later time.
      */
-    disconnect(fatal: boolean = false) {
+    disconnect(fatal: boolean = false): void {
       if (!fatal && config.log && state !== STATE.DISCONNECTED) {
         console.warn(
           '[WARN] | DatastreamConnection | Connection is being terminated and will not reconnect until "connection.connect" is called',
@@ -531,7 +542,7 @@ export default function createConnection(
       closeSocketIfNeeded(CLOSE_CODES.LEAVING, 'ConnectionDisconnect');
     },
 
-    reconnect() {
+    reconnect(): void {
       reconnect(true);
     },
 
@@ -547,7 +558,7 @@ export default function createConnection(
     send<RID extends string, REQ extends string>(
       message: $Datastream.Request$Valid<RID, REQ>,
       shouldBufferRequest: boolean,
-    ) {
+    ): boolean {
       if (!message.request) {
         throw new Error(
           '[ERROR] | DatastreamConnection | Attempted to send an invalid message to the Datastream: "message.request was not defined"',
@@ -612,7 +623,7 @@ export default function createConnection(
      * Resets a FATAL state if it exists and is only applicable when the `token` or `key` has been
      * changed.
      */
-    reset() {
+    reset(): void {
       if (state === STATE.FATAL) {
         state = STATE.IDLE;
       }
