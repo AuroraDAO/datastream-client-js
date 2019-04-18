@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.6](https://github.com/AuroraDAO/datastream-client-js/compare/v1.6.5...v1.6.6) (2019-04-18)
+
+
+### Bug Fixes
+
+* more web connector shimminess ([1065d5d](https://github.com/AuroraDAO/datastream-client-js/commit/1065d5d))
+
+
+
+
+
 ## [1.6.1](https://github.com/AuroraDAO/datastream-client-js/compare/v1.6.0...v1.6.1) (2019-04-18)
 
 **Note:** Version bump only for package @auroradao/datastream-connector-web
