@@ -395,11 +395,7 @@ export default function createConnection(
     task.cancel('connection:ping');
     if (socket) {
       const { readyState } = socket;
-      if (
-        readyState !== socket.CLOSED &&
-        readyState !== socket.CLOSING &&
-        readyState !== socket.CONNECTING
-      ) {
+      if (readyState !== socket.CLOSED && readyState !== socket.CLOSING) {
         if (config.log) {
           console.info(
             `[RESET] | DatastreamConnection | Closing Connection with code (${String(
