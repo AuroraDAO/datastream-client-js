@@ -443,6 +443,7 @@ export default function createConnection(
     if (force) {
       redelay.reset();
     } else if (
+      state === STATE.RECONNECTING ||
       task.has('connection:reconnect') ||
       task.has('connection:will-reconnect')
     ) {
@@ -456,8 +457,7 @@ export default function createConnection(
         )} seconds.`,
       );
     }
-    state = STATE.DISCONNECTED;
-    closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'ConnectionReconnect');
+    // closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'ConnectionReconnect');
     state = STATE.RECONNECTING;
     task.defer(
       'connection:will-reconnect',
