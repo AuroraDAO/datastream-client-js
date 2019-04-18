@@ -19,11 +19,11 @@ export default function createDatastreamConnector(
     if (isClosed) {
       return socket.close(closeArgs[0], closeArgs[1]);
     }
-    return callback('open');
+    return callback('open', connector);
   });
 
   socket.addEventListener('close', ({ code, reason, wasClean }) =>
-    callback('close', code, reason, wasClean),
+    callback('close', connector, code, reason, wasClean),
   );
 
   socket.addEventListener('message', event => {
@@ -32,17 +32,17 @@ export default function createDatastreamConnector(
        we can do the required callback as expected.
        @see connection.ping() notes */
     if (event.data.length <= 35 && PONG_RE.test(event.data)) {
-      return callback('pong', JSON.parse(event.data).pong);
+      return callback('pong', connector, JSON.parse(event.data).pong);
     }
-    callback('message', event.data);
+    callback('message', connector, event.data);
   });
 
   socket.addEventListener('error', () =>
     /* We don't get any real information on web */
-    callback('error', new Error('ConnectionError')),
+    callback('error', connector, new Error('ConnectionError')),
   );
 
-  return {
+  const connector = {
     OPEN: socket.OPEN,
     CONNECTING: socket.CONNECTING,
     CLOSING: socket.CLOSING,
@@ -94,4 +94,6 @@ export default function createDatastreamConnector(
       }
     },
   };
+
+  return connector;
 }

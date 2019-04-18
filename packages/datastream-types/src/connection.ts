@@ -70,11 +70,21 @@ export interface Connection$Socket {
 }
 
 export interface Connection$Callback {
-  (event: 'open'): void;
-  (event: 'close', code: number, reason: string, clean: boolean): void;
-  (event: 'error', error: Error): void;
-  (event: 'pong', data: string): void;
-  (event: 'message', data: string | ArrayBuffer | Blob | ArrayBufferView): void;
+  (event: 'open', socket: Connection$Socket): void;
+  (
+    event: 'close',
+    socket: Connection$Socket,
+    code: number,
+    reason: string,
+    clean: boolean,
+  ): void;
+  (event: 'error', socket: Connection$Socket, error: Error): void;
+  (event: 'pong', socket: Connection$Socket, data: string): void;
+  (
+    event: 'message',
+    socket: Connection$Socket,
+    data: string | ArrayBuffer | Blob | ArrayBufferView,
+  ): void;
 }
 
 export type Connection$Connector = (

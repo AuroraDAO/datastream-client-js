@@ -12,19 +12,21 @@ export default function createDatastreamConnector(
   const socket = new WebSocket(config.url);
 
   socket
-    .on('open', () => callback('open'))
-    .on('close', (code, reason) => callback('close', code, reason, true))
+    .on('open', () => callback('open', connector))
+    .on('close', (code, reason) =>
+      callback('close', connector, code, reason, true),
+    )
     .on('message', data => {
       if (Buffer.isBuffer(data) || Array.isArray(data)) {
         const buf = Array.isArray(data) ? Buffer.concat(data) : data;
-        return callback('message', toArrayBuffer(buf));
+        return callback('message', connector, toArrayBuffer(buf));
       }
-      return callback('message', data);
+      return callback('message', connector, data);
     })
-    .on('pong', data => callback('pong', data.toString()))
-    .on('error', error => callback('error', error));
+    .on('pong', data => callback('pong', connector, data.toString()))
+    .on('error', error => callback('error', connector, error));
 
-  return {
+  const connector = {
     OPEN: socket.OPEN,
     CONNECTING: socket.CONNECTING,
     CLOSING: socket.CLOSING,
@@ -46,4 +48,6 @@ export default function createDatastreamConnector(
     close: socket.close.bind(socket),
     terminate: socket.terminate.bind(socket),
   };
+
+  return connector;
 }

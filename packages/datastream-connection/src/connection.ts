@@ -127,7 +127,7 @@ export default function createConnection(
       );
     }
     socket.send(JSON.stringify(packet), err =>
-      err ? handleSocketEvent('error', err) : undefined,
+      err ? handleSocketEvent('error', socket, err) : undefined,
     );
   }
 
@@ -280,12 +280,16 @@ export default function createConnection(
    */
   function handleSocketEvent(
     event: $Datastream.Connection$SocketEvents,
+    onSocket: $Datastream.Connection$Socket,
     ...args: SocketEvent$Args<$Datastream.Connection$SocketEvents>
   ): void {
     let asEvent: $Datastream.Connection$Events;
     let eventArgs: $Datastream.Client$EventArgs<
       Exclude<$Datastream.Connection$Events, 'reconnect' | 'will-reconnect'>
     >;
+    if (onSocket !== socket) {
+      return;
+    }
     switch (event) {
       case 'open': {
         state = STATE.CONNECTED;
@@ -443,6 +447,7 @@ export default function createConnection(
     if (force) {
       redelay.reset();
     } else if (
+      state === STATE.RECONNECTING ||
       task.has('connection:reconnect') ||
       task.has('connection:will-reconnect')
     ) {
@@ -456,7 +461,6 @@ export default function createConnection(
         )} seconds.`,
       );
     }
-    state = STATE.DISCONNECTED;
     closeSocketIfNeeded(CLOSE_CODES.NORMAL, 'ConnectionReconnect');
     state = STATE.RECONNECTING;
     task.defer(
