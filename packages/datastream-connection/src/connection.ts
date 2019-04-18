@@ -543,7 +543,9 @@ export default function createConnection(
     },
 
     reconnect(): void {
-      reconnect(true);
+      if (connection.connected) {
+        reconnect(true);
+      }
     },
 
     /**
