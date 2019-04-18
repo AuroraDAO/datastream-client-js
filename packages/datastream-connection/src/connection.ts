@@ -543,7 +543,7 @@ export default function createConnection(
     },
 
     reconnect(): void {
-      if (connection.connected) {
+      if (STATE.HANDSHAKED || STATE.CONNECTED) {
         reconnect(true);
       }
     },
