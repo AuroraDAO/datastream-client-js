@@ -48,10 +48,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fixes for buffer of undefined error ([b572560](https://github.com/AuroraDao/datastream-client-js/commit/b572560))
 
-## [1.3.1](https://github.com/AuroraDao/datastream-client-js/compare/v1.3.0...v1.3.1) (2019-03-20)
-
-**Note:** Version bump only for package @auroradao/datastream-client-js
-
 # [1.3.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.2.2...v1.3.0) (2019-03-20)
 
 ### Features
@@ -80,13 +76,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - dont defer auto connect when enabled to prevent socket not defined error when sending synchronously ([173ec92](https://github.com/AuroraDao/datastream-client-js/commit/173ec92))
-
-## [1.1.3-alpha.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.1.2...v1.1.3-alpha.0) (2019-02-16)
-
-**Note:** Version bump only for package @auroradao/datastream-client-js
-
-## [1.1.2](https://github.com/AuroraDao/datastream-client-js/compare/v1.1.1...v1.1.2) (2019-02-11)
-
-### Bug Fixes
-
-- remove module from package.json ([d3bf490](https://github.com/AuroraDao/datastream-client-js/commit/d3bf490))
