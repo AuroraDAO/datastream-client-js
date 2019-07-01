@@ -35,8 +35,13 @@ export const DEFAULT_CONFIG_PROMISE = {
  * Datastream request values for transmission.
  */
 export const TO_REQUEST: Record<string, $Datastream.Subscribe$Requests> = {
+  // User wallets
   account: 'subscribeToAccounts',
   accounts: 'subscribeToAccounts',
+
+  // User accounts
+  users: 'subscribeToUsers',
+
   market: 'subscribeToMarkets',
   markets: 'subscribeToMarkets',
   chain: 'subscribeToChains',

@@ -31,11 +31,13 @@ export type Request$Complete<
 
 export type Subscribe$Requests =
   | 'subscribeToAccounts'
+  | 'subscribeToUsers'
   | 'subscribeToMarkets'
   | 'subscribeToChains';
 
 export type Subscribe$Categories =
   | 'accounts'
+  | 'users'
   | 'markets'
   | 'chains'
   | 'account'
