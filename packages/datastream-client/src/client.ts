@@ -260,7 +260,7 @@ export class DatastreamClient implements $Datastream.Client {
     if (!request) {
       throw new ValidationError(
         'client.subscribe',
-        `"to" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${to}"`,
+        `"to" must be a valid value from "account, accounts, users, market, markets, chain, chains" but got "${to}"`,
       );
     }
 
@@ -296,7 +296,7 @@ export class DatastreamClient implements $Datastream.Client {
     if (!request) {
       throw new ValidationError(
         'client.unsubscribe',
-        `"from" must be a valid value from "account, accounts, market, markets, chain, chains" but got "${from}"`,
+        `"from" must be a valid value from "account, accounts, users, market, markets, chain, chains" but got "${from}"`,
       );
     }
 
