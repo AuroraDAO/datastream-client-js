@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.9...v1.7.0) (2019-07-01)
+
+
+### Bug Fixes
+
+* **subscription:** add users to subscription message ([f108f2f](https://github.com/AuroraDao/datastream-client-js/commit/f108f2f))
+
+
+### Features
+
+* add subscription to users ([c1d63a0](https://github.com/AuroraDao/datastream-client-js/commit/c1d63a0))
+
+
+
+
+
 ## [1.6.9](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.8...v1.6.9) (2019-04-18)
 
 ### Bug Fixes
