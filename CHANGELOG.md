@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.0...v1.8.1) (2019-07-22)
+
+
+### Bug Fixes
+
+* fix configuration updates for token/key ([61d514c](https://github.com/AuroraDao/datastream-client-js/commit/61d514c))
+
+
+
+
+
 # [1.8.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.9...v1.8.0) (2019-07-22)
 
 
