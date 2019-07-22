@@ -12,7 +12,7 @@ export function modifyRunningConfig(
     locale: typeof update.locale === 'string' ? update.locale : config.locale,
     log: typeof update.log === 'boolean' ? update.log : config.log,
     token: hasToken ? update.token : config.token,
-    key: hasKey ? update.key : config.token,
+    key: hasKey ? update.key : config.key,
   });
 }
 
