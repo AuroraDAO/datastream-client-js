@@ -126,7 +126,7 @@ export default function createConnection(
         '[ERROR] | DatastreamConnection | Tried to send to socket before it was created, please report this to the library maintainers.',
       );
     }
-    socket.send(JSON.stringify(packet), err =>
+    socket.send(JSON.stringify(packet), (err?: Error) =>
       err ? handleSocketEvent('error', socket, err) : undefined,
     );
   }
@@ -554,6 +554,19 @@ export default function createConnection(
       if (STATE.HANDSHAKED || STATE.CONNECTED) {
         reconnect();
       }
+    },
+
+    /**
+     * Used to send a handshake request to the Datastream.  This will allow changing the
+     * authentication parameters of the given session without a full reconnect.  This may
+     * occur, for example, when logging out a user.
+     */
+    handshake(): boolean {
+      if (STATE.CONNECTED) {
+        sendToSocket(requests.handshake(config));
+        return true;
+      }
+      return false;
     },
 
     /**

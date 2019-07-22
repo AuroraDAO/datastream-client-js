@@ -103,8 +103,10 @@ export class DatastreamClient implements $Datastream.Client {
   public set key(key: undefined | string) {
     if (key !== this.config.key) {
       modifyRunningConfig(this.config, { key });
-      this.connection.reset();
-      this.connection.reconnect();
+      if (!this.connection.handshake()) {
+        this.connection.reset();
+        this.connection.reconnect();
+      }
     }
   }
 
@@ -119,8 +121,10 @@ export class DatastreamClient implements $Datastream.Client {
   public set token(token: undefined | string) {
     if (token !== this.config.token) {
       modifyRunningConfig(this.config, { token });
-      this.connection.reset();
-      this.connection.reconnect();
+      if (!this.connection.handshake()) {
+        this.connection.reset();
+        this.connection.reconnect();
+      }
     }
   }
 

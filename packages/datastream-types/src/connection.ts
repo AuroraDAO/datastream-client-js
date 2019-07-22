@@ -50,6 +50,8 @@ export interface Connection$Controller {
   ): boolean;
   removeFromBuffer(message: Request$Valid<string, string>): boolean;
   reset(): void;
+
+  handshake(): boolean;
 }
 
 export interface Connection$Socket {
