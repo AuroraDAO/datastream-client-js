@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/AuroraDAO/datastream-client/compare/v1.6.9...v1.8.0) (2019-07-22)
+
+
+### Features
+
+* add subscription to users ([#2](https://github.com/AuroraDAO/datastream-client/issues/2)) ([3d6d495](https://github.com/AuroraDAO/datastream-client/commit/3d6d495))
+* resend handshake on key/token change ([b989fbd](https://github.com/AuroraDAO/datastream-client/commit/b989fbd))
+
+
+
+
+
 # [1.7.0](https://github.com/AuroraDAO/datastream-client/compare/v1.6.9...v1.7.0) (2019-07-01)
 
 
