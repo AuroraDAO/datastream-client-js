@@ -551,7 +551,7 @@ export default function createConnection(
     },
 
     reconnect(): void {
-      if (STATE.HANDSHAKED || STATE.CONNECTED) {
+      if (STATE.CONNECTED || STATE.HANDSHAKED) {
         reconnect();
       }
     },
@@ -562,7 +562,7 @@ export default function createConnection(
      * occur, for example, when logging out a user.
      */
     handshake(): boolean {
-      if (STATE.CONNECTED) {
+      if (STATE.HANDSHAKED) {
         sendToSocket(requests.handshake(config));
         return true;
       }
