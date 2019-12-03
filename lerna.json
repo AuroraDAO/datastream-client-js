@@ -4,7 +4,7 @@
   ],
   "conventionalCommits": true,
   "useWorkspaces": true,
-  "version": "1.8.8",
+  "version": "1.9.0",
   "npmClient": "yarn",
   "npmClientArgs": [
     "--no-lockfile"
