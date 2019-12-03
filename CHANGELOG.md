@@ -7,143 +7,69 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @auroradao/datastream-client-js
 
-
-
-
-
 ## [1.9.1](https://github.com/AuroraDao/datastream-client-js/compare/v1.9.0...v1.9.1) (2019-12-03)
-
 
 ### Bug Fixes
 
-* **docs:** update docs to use ETH_IDEX instead of ETH_AURA ([b5fdd77](https://github.com/AuroraDao/datastream-client-js/commit/b5fdd77))
-
-
-
-
+- **docs:** update docs to use ETH_IDEX instead of ETH_AURA ([b5fdd77](https://github.com/AuroraDao/datastream-client-js/commit/b5fdd77))
 
 # [1.9.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.8...v1.9.0) (2019-12-03)
 
-
 ### Features
 
-* **datastream-client:** allow array of strings for topics ([2652c86](https://github.com/AuroraDao/datastream-client-js/commit/2652c86))
-
-
-
-
+- **datastream-client:** allow array of strings for topics ([2652c86](https://github.com/AuroraDao/datastream-client-js/commit/2652c86))
 
 ## [1.8.8](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.7...v1.8.8) (2019-12-03)
 
-
 ### Bug Fixes
 
-* **datastream-types:** fix message event types ([6317c8a](https://github.com/AuroraDao/datastream-client-js/commit/6317c8a))
-
-
-
-
+- **datastream-types:** fix message event types ([6317c8a](https://github.com/AuroraDao/datastream-client-js/commit/6317c8a))
 
 ## [1.8.7](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.6...v1.8.7) (2019-12-03)
 
-
 ### Bug Fixes
 
-* cosmiconfig dep ([878bf7a](https://github.com/AuroraDao/datastream-client-js/commit/878bf7a))
-* resolutions for yarn ([4408caf](https://github.com/AuroraDao/datastream-client-js/commit/4408caf))
-* set js-yaml to 3.13.1 ([3a5e316](https://github.com/AuroraDao/datastream-client-js/commit/3a5e316))
-* set-value ^2.0.1 ([9c188ef](https://github.com/AuroraDao/datastream-client-js/commit/9c188ef))
-* update other dev dependencies ([29547d8](https://github.com/AuroraDao/datastream-client-js/commit/29547d8))
-* update set-value dependency ([c5985e4](https://github.com/AuroraDao/datastream-client-js/commit/c5985e4))
-
-
-
-
-
-## [1.8.6](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.5...v1.8.6) (2019-12-03)
-
-**Note:** Version bump only for package @auroradao/datastream-client-js
-
-
-
-
-
-## [1.8.5](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.4...v1.8.5) (2019-12-03)
-
-**Note:** Version bump only for package @auroradao/datastream-client-js
-
-
-
-
-
-## [1.8.4](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.3...v1.8.4) (2019-12-03)
-
-**Note:** Version bump only for package @auroradao/datastream-client-js
-
-
-
-
+- cosmiconfig dep ([878bf7a](https://github.com/AuroraDao/datastream-client-js/commit/878bf7a))
+- resolutions for yarn ([4408caf](https://github.com/AuroraDao/datastream-client-js/commit/4408caf))
+- set js-yaml to 3.13.1 ([3a5e316](https://github.com/AuroraDao/datastream-client-js/commit/3a5e316))
+- set-value ^2.0.1 ([9c188ef](https://github.com/AuroraDao/datastream-client-js/commit/9c188ef))
+- update other dev dependencies ([29547d8](https://github.com/AuroraDao/datastream-client-js/commit/29547d8))
+- update set-value dependency ([c5985e4](https://github.com/AuroraDao/datastream-client-js/commit/c5985e4))
 
 ## [1.8.3](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.2...v1.8.3) (2019-07-24)
 
-
 ### Bug Fixes
 
-* check if connected before handshake ([01a1d0f](https://github.com/AuroraDao/datastream-client-js/commit/01a1d0f))
-
-
-
-
+- check if connected before handshake ([01a1d0f](https://github.com/AuroraDao/datastream-client-js/commit/01a1d0f))
 
 ## [1.8.2](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.1...v1.8.2) (2019-07-24)
 
-
 ### Bug Fixes
 
-* fix for kyc token race condition ([8434aee](https://github.com/AuroraDao/datastream-client-js/commit/8434aee))
-
-
-
-
+- fix for kyc token race condition ([8434aee](https://github.com/AuroraDao/datastream-client-js/commit/8434aee))
 
 ## [1.8.1](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.0...v1.8.1) (2019-07-22)
 
-
 ### Bug Fixes
 
-* fix configuration updates for token/key ([61d514c](https://github.com/AuroraDao/datastream-client-js/commit/61d514c))
-
-
-
-
+- fix configuration updates for token/key ([61d514c](https://github.com/AuroraDao/datastream-client-js/commit/61d514c))
 
 # [1.8.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.9...v1.8.0) (2019-07-22)
 
-
 ### Features
 
-* add subscription to users ([#2](https://github.com/AuroraDao/datastream-client-js/issues/2)) ([3d6d495](https://github.com/AuroraDao/datastream-client-js/commit/3d6d495))
-* resend handshake on key/token change ([b989fbd](https://github.com/AuroraDao/datastream-client-js/commit/b989fbd))
-
-
-
-
+- add subscription to users ([#2](https://github.com/AuroraDao/datastream-client-js/issues/2)) ([3d6d495](https://github.com/AuroraDao/datastream-client-js/commit/3d6d495))
+- resend handshake on key/token change ([b989fbd](https://github.com/AuroraDao/datastream-client-js/commit/b989fbd))
 
 # [1.7.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.9...v1.7.0) (2019-07-01)
 
-
 ### Bug Fixes
 
-* **subscription:** add users to subscription message ([f108f2f](https://github.com/AuroraDao/datastream-client-js/commit/f108f2f))
-
+- **subscription:** add users to subscription message ([f108f2f](https://github.com/AuroraDao/datastream-client-js/commit/f108f2f))
 
 ### Features
 
-* add subscription to users ([c1d63a0](https://github.com/AuroraDao/datastream-client-js/commit/c1d63a0))
-
-
-
-
+- add subscription to users ([c1d63a0](https://github.com/AuroraDao/datastream-client-js/commit/c1d63a0))
 
 ## [1.6.9](https://github.com/AuroraDao/datastream-client-js/compare/v1.6.8...v1.6.9) (2019-04-18)
 
