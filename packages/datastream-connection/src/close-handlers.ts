@@ -51,20 +51,20 @@ const handlers: ClosureHandlers = {
     switch (reason) {
       case 'AuthenticationFailure': {
         console.error(
-          '[FATAL] | DatastreamConnection | The authentication information you have provided is invalid.  No further connection attempts will be made.  Please check the authentication information provided and resolve before trying again.'
+          '[FATAL] | DatastreamConnection | The authentication information you have provided is invalid.  No further connection attempts will be made.  Please check the authentication information provided and resolve before trying again.',
         );
         throw new Error('FATAL');
       }
       case 'InvalidVersion': {
         console.error(
-          '[FATAL] | DatastreamConnection | This client version has been deprecated and must be upgraded to the newest version before it may interact with the Datastream API.  No further connection attempts will be made.'
+          '[FATAL] | DatastreamConnection | This client version has been deprecated and must be upgraded to the newest version before it may interact with the Datastream API.  No further connection attempts will be made.',
         );
         throw new Error('FATAL');
       }
       case 'ProtocolNegotiationFailure': {
         if (config.log) {
           console.warn(
-            '[WARN] | DatastreamConnection | A protocol negotation failure occurred.  This may be due to the server receiving higher traffic than usual and should be resolved shortly.  A reconnection attempt will be schedule shortly.'
+            '[WARN] | DatastreamConnection | A protocol negotation failure occurred.  This may be due to the server receiving higher traffic than usual and should be resolved shortly.  A reconnection attempt will be schedule shortly.',
           );
         }
         break;
@@ -72,7 +72,7 @@ const handlers: ClosureHandlers = {
       case 'SessionIDMismatch': {
         if (config.log) {
           console.warn(
-            '[WARN] | DatastreamConnection | A Session ID mismatch has been detected.  This means that the server and client have gotten out of sync.  A reconnect will be scheduled immediately to re-sync with the Datastream.'
+            '[WARN] | DatastreamConnection | A Session ID mismatch has been detected.  This means that the server and client have gotten out of sync.  A reconnect will be scheduled immediately to re-sync with the Datastream.',
           );
         }
         break;
@@ -80,7 +80,7 @@ const handlers: ClosureHandlers = {
       default: {
         if (config.log) {
           console.warn(
-            `[WARN] | DatastreamConnection | An unhandled protocol error has occurred "${reason}", a reconnect will be scheduled.`
+            `[WARN] | DatastreamConnection | An unhandled protocol error has occurred "${reason}", a reconnect will be scheduled.`,
           );
         }
         break;

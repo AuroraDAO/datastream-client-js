@@ -189,7 +189,7 @@ export class DatastreamClient implements $Datastream.Client {
     this: this,
     request: REQ,
     payload: Record<string | number, unknown> = {},
-    shouldBufferRequest: boolean = Boolean(this.config.buffer),
+    shouldBufferRequest = !!this.config.buffer,
     context?: Record<string | number, unknown>,
   ): $Datastream.Client$SendResponse<RID, REQ> {
     if (context && this.config.type !== 'proxy') {

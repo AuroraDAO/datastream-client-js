@@ -13,6 +13,7 @@ export class DatastreamNotReadyError<
 
   public constructor(rid: RID, request: REQ, state: number) {
     super('DatastreamNotReady');
+    Object.setPrototypeOf(this, Error.prototype);
     this.rid = rid;
     this.request = request;
     this.state = state;

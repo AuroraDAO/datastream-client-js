@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import * as $Datastream from '@auroradao/datastream-types';
 
 export class ValidationError<D extends string> extends Error
@@ -8,6 +9,7 @@ export class ValidationError<D extends string> extends Error
 
   public constructor(during: D, str: string) {
     super(`[ERROR] | datastream-client | ${during} | ${str}`);
+    Object.setPrototypeOf(this, Error.prototype);
     // Error.captureStackTrace(this, ValidationError);
     this.during = during;
   }
@@ -24,6 +26,7 @@ export class DatastreamCancellationError<RID extends string, REQ extends string>
 
   public constructor(rid: RID, request: REQ) {
     super('CANCELLED');
+    Object.setPrototypeOf(this, Error.prototype);
     this.rid = rid;
     this.request = request;
   }
@@ -41,6 +44,7 @@ export class DatastreamServerError<
 
   public constructor(rid: RID, request: REQ, message: string) {
     super(message);
+    Object.setPrototypeOf(this, Error.prototype);
     this.rid = rid;
     this.request = request;
   }
@@ -60,6 +64,7 @@ export class DatastreamTimeoutError<
 
   public constructor(rid: RID, request: REQ, sent: boolean) {
     super('TIMEOUT');
+    Object.setPrototypeOf(this, Error.prototype);
     this.rid = rid;
     this.request = request;
     this.sent = sent;

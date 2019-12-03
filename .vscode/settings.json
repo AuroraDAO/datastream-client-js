@@ -4,7 +4,6 @@
   "typescript.reportStyleChecksAsWarnings": false,
   "typescript.validate.enable": true,
   "javascript.validate.enable": true,
-  "prettier.eslintIntegration": true,
   "eslint.packageManager": "yarn",
   "eslint.validate": [
     "javascript",

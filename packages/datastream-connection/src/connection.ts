@@ -436,7 +436,7 @@ export default function createConnection(
    * @param {boolean} [force=false]
    * @returns
    */
-  function reconnect(force: boolean = false): number {
+  function reconnect(force = false): number {
     if (state === STATE.FATAL) {
       handleFatalState();
     }
@@ -539,7 +539,7 @@ export default function createConnection(
      * this is called, the only time the socket will reconnect is if
      * `connection.connect` is called at a later time.
      */
-    disconnect(fatal: boolean = false): void {
+    disconnect(fatal = false): void {
       if (!fatal && config.log && state !== STATE.DISCONNECTED) {
         console.warn(
           '[WARN] | DatastreamConnection | Connection is being terminated and will not reconnect until "connection.connect" is called',
@@ -570,8 +570,6 @@ export default function createConnection(
     },
 
     /**
-     *
-     *
      * @template RID
      * @template REQ
      * @param {$Datastream.Request$Valid<RID, REQ>} message
