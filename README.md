@@ -58,8 +58,8 @@ const client = createDatastreamClient(
       client
         .subscribe(
           'markets',
-          ['ETH_AURA', 'ETH_IDXM'],
-          ['market_orders', 'market_cancels', 'market_trades']
+          ['ETH_IDEX', 'ETH_IDXM'],
+          ['market_orders', 'market_cancels', 'market_trades'],
         )
         .promise({ timeout: 10000 })
         .then(result => {
@@ -74,19 +74,24 @@ const client = createDatastreamClient(
         });
     },
     onEvent(message) {
+      console.log('Event: ', message);
       switch (message.event) {
         case 'market_trades':
         case 'market_cancels':
         case 'market_orders': {
-          return handleMarketEvent(message);
+          break;
         }
         case 'account_withdrawal_dispatched':
         case 'account_withdrawal_complete': {
-          return handleAccountEvent(message);
+          break;
+        }
+        default: {
+          console.log('Unknown Event: ', message.event);
+          break;
         }
       }
     },
-  }
+  },
 );
 ```
 
@@ -217,7 +222,7 @@ A client may subscribe to many events for a given topic. However, each request m
 client.subscribe(
   'markets',
   ['ETH_AURA', 'ETH_IDXM'],
-  ['market_orders', 'market_cancels', 'market_trades']
+  ['market_orders', 'market_cancels', 'market_trades'],
 );
 ```
 
