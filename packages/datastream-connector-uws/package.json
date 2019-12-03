@@ -1,6 +1,6 @@
 {
   "name": "@auroradao/datastream-connector-uws",
-  "version": "1.8.0",
+  "version": "1.8.5",
   "description": "Connector to use the ws package with the @auroradao/datastream-client",
   "main": "lib/index.js",
   "author": "Braden R. Napier",
@@ -24,7 +24,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@auroradao/datastream-types": "^1.8.0",
+    "@auroradao/datastream-types": "^1.8.5",
     "uws": "10.148.1"
   },
   "devDependencies": {
