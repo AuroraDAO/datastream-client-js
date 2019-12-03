@@ -254,14 +254,14 @@ export class DatastreamClient implements $Datastream.Client {
    */
   public subscribe(
     to: $Datastream.Subscribe$Categories,
-    topics: string,
+    topics: string | string[],
     rawEvents?: string | string[],
     context?: Record<string | number, unknown>,
   ): $Datastream.Client$SendResponse<string, $Datastream.Subscribe$Requests> {
     if (!topics) {
       throw new ValidationError(
         'client.subscribe',
-        '"topics" must be a string defining the topic for-which you wish to subscribe.',
+        '"topics" must be a string or array of strings defining the topic(s) for-which you wish to subscribe.',
       );
     }
     const request = TO_REQUEST[to];
@@ -366,10 +366,9 @@ export class DatastreamClient implements $Datastream.Client {
       const ref = this.queue.get(data.rid);
       if (ref) {
         if (event === 'message') {
-          return ref.resolve(data as $Datastream.Message$Result$Success<
-            string,
-            string
-          >);
+          return ref.resolve(
+            data as $Datastream.Message$Result$Success<string, string>,
+          );
         }
         return ref.reject(
           new DatastreamServerError(
@@ -386,9 +385,10 @@ export class DatastreamClient implements $Datastream.Client {
         case 'handshake': {
           const callback = this.callbacks.onConnect;
           if (callback) {
-            callback.apply(this, args as $Datastream.Client$EventArgs<
-              'handshake'
-            >);
+            callback.apply(
+              this,
+              args as $Datastream.Client$EventArgs<'handshake'>,
+            );
           }
           break;
         }
@@ -402,18 +402,20 @@ export class DatastreamClient implements $Datastream.Client {
         case 'will-reconnect': {
           const callback = this.callbacks.onWillReconnect;
           if (callback) {
-            callback.apply(this, args as $Datastream.Client$EventArgs<
-              'will-reconnect'
-            >);
+            callback.apply(
+              this,
+              args as $Datastream.Client$EventArgs<'will-reconnect'>,
+            );
           }
           break;
         }
         case 'reconnect': {
           const callback = this.callbacks.onReconnect;
           if (callback) {
-            callback.apply(this, args as $Datastream.Client$EventArgs<
-              'reconnect'
-            >);
+            callback.apply(
+              this,
+              args as $Datastream.Client$EventArgs<'reconnect'>,
+            );
           }
           break;
         }
@@ -434,9 +436,10 @@ export class DatastreamClient implements $Datastream.Client {
         case 'message': {
           const callback = this.callbacks.onSuccess || this.callbacks.onMessage;
           if (callback) {
-            callback.apply(this, args as $Datastream.Client$EventArgs<
-              'message'
-            >);
+            callback.apply(
+              this,
+              args as $Datastream.Client$EventArgs<'message'>,
+            );
           }
           break;
         }
