@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.7](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.6...v1.8.7) (2019-12-03)
+
+
+### Bug Fixes
+
+* cosmiconfig dep ([878bf7a](https://github.com/AuroraDao/datastream-client-js/commit/878bf7a))
+* resolutions for yarn ([4408caf](https://github.com/AuroraDao/datastream-client-js/commit/4408caf))
+* set js-yaml to 3.13.1 ([3a5e316](https://github.com/AuroraDao/datastream-client-js/commit/3a5e316))
+* set-value ^2.0.1 ([9c188ef](https://github.com/AuroraDao/datastream-client-js/commit/9c188ef))
+* update other dev dependencies ([29547d8](https://github.com/AuroraDao/datastream-client-js/commit/29547d8))
+* update set-value dependency ([c5985e4](https://github.com/AuroraDao/datastream-client-js/commit/c5985e4))
+
+
+
+
+
 ## [1.8.6](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.5...v1.8.6) (2019-12-03)
 
 **Note:** Version bump only for package @auroradao/datastream-client-js
