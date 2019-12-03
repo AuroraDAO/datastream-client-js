@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/AuroraDao/datastream-client-js/compare/v1.9.0...v1.9.1) (2019-12-03)
+
+
+### Bug Fixes
+
+* **docs:** update docs to use ETH_IDEX instead of ETH_AURA ([b5fdd77](https://github.com/AuroraDao/datastream-client-js/commit/b5fdd77))
+
+
+
+
+
 # [1.9.0](https://github.com/AuroraDao/datastream-client-js/compare/v1.8.8...v1.9.0) (2019-12-03)
 
 
