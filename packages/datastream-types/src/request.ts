@@ -44,7 +44,7 @@ export type Subscribe$Categories =
   | 'market'
   | 'chain';
 
-export type Message$Event$Types = '';
+export type Message$Event$Types = string;
 
 export interface Message$Event {
   readonly sid: string;
